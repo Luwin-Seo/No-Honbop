@@ -1,0 +1,75 @@
+* {
+  box-sizing: border-box;
+}
+
+#item_info {
+  width: 500px;
+  border: 1px solid rgb(214, 214, 214);
+  border-radius: 5px;
+  margin: 20px auto 0 auto;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+#pic {
+  width: 498px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+#store {
+  width: 480px;
+  border-bottom: 1px solid rgb(214, 214, 214);
+  margin: 0 10px;
+  padding: 10px;
+}
+
+#store h1 {
+  font-size: 25px;
+}
+
+#user {
+  width: 480px;
+  border-bottom: 1px solid rgb(214, 214, 214);
+  margin: 0 10px;
+  padding: 10px;
+}
+
+.date {
+  color: darkcyan;
+}
+
+.tags {
+  color: darkslategrey;
+}
+
+form {
+  width: 480px;
+  margin: 0 10px;
+  padding: 20px;
+  text-align: center;
+}
+
+#item_info > form > div > input {
+  width: 460px;
+}
+
+#comment {
+  width: 480px;
+  margin: 0 10px;
+  padding: 10px;
+}
+
+#comment ul {
+  margin: 0 auto 10px auto;
+}
+
+#comment ul li {
+  font-size: 15px;
+}
+
+#comment ul li:nth-child(2) {
+  width: 380px
+}
