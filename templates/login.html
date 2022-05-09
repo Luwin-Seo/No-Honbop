@@ -2,11 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
     <title>로그인 페이지</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
     <style>
-        .wrap {
-            background-color: green;
+        * {
+            font-family: 'Jua', sans-serif;
+        }
+
+        .login-form{
+            width: 500px;
+            margin: 100px auto 0px auto;
+            border: solid 2px black;
+            box-shadow: 0px 0px 5px 0px gray;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+        }
+        p > a {
+            margin: 10px;
+        }
+        p > button {
+            width: 200px;
         }
     </style>
 </head>
@@ -27,8 +51,8 @@
                 <input type="text" placeholder="패스워드 입력하세요">
             </p>
             <p>
-                <button class="mybtn">로그인</button>
-                <button class="mybtn">회원가입하기</button>
+                <button class="btn btn-dark">로그인</button>
+                <a class="btn btn-secondary" href="#" role="button">회원가입</a>
             </p>
         </div>
     </form>
