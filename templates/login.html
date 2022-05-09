@@ -5,18 +5,33 @@
     <title>로그인 페이지</title>
 
     <style>
-
+        .wrap {
+            background-color: green;
+        }
     </style>
 </head>
 <body>
-    <div >
-        <p>
-            ID : <input type="text" placeholder="아이디 입력하세요">
-        </p>
-        <p>
-            PW : <input type="text" placeholder="패스워드 입력하세요">
-        </p>
-        <button class="mybtn">로그인</button>
-    </div>
+    <form>
+        <div class="login-form">
+            <h2>로그인</h2>
+            <p>
+                <label>
+                    <strong>Username</strong>
+                </label>
+                <input type="text" placeholder="아이디 입력하세요">
+            </p>
+            <p>
+                <label>
+                    <strong>Password</strong>
+                </label>
+                <input type="text" placeholder="패스워드 입력하세요">
+            </p>
+            <p>
+                <button class="mybtn">로그인</button>
+                <button class="mybtn">회원가입하기</button>
+            </p>
+        </div>
+    </form>
+
 </body>
 </html>
