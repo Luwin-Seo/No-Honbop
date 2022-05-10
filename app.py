@@ -64,10 +64,10 @@ def detail(post_id):
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        post = db.posts.find_one({"post_id": post_id})
-        comments = list(db.comments.find({}))
+        post = db.posts.find_one({"post_id": int(post_id)})
+        comments = list(db.comments.find({'post_id': post_id}))
         likes = len(list(db.likes.find({'post_id': post_id})))
-        
+        print(post)
         return render_template('detail.html', 
             likes = likes, post = post, comments = comments, post_id = post_id)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
@@ -131,6 +131,9 @@ def save_img():
 
 @app.route('/posting', methods=['POST'])
 def posting():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    post_id = len(list(db.posts.find({},{'_id':False}))) + 1
     title_receive = request.form['title_give']
     place_receive = request.form['place_give']
     desc_receive = request.form['desc_give']
@@ -139,12 +142,13 @@ def posting():
     date_receive = request.form['date_give']
 
     doc = {
+        'post_id': post_id,
         'title': title_receive,
         'place': place_receive,
         'desc': desc_receive,
         'tag': tag_receive,
         'payment': payment_receive,
-        'writer': "writer_info['id']",
+        'user_id': payload['id'],
         'date': date_receive,
         'user_count': 0,
         'like': 0
@@ -236,15 +240,17 @@ def write_comment():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         comment = request.form['comment']
+        post_id = request.form['post_id']
         index = len(list(db.comments.find({},{'_id':False}))) + 1
-        
+        print('abc',post_id)
         db.comments.insert_one({
-          'index' : index,
+          'index': index,
+          'post_id': post_id,
           'user_id': payload["id"],
           'comment': comment
         })
         
-        return redirect(url_for("detail"))
+        return redirect(post_id)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("login"))
 
@@ -253,13 +259,14 @@ def delete_comment():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        post_id = request.form['post_id']
         
         db.comments.delete_many({
           'index' : int(request.form['index']),
           'user_id': payload['id']
         })
         
-        return redirect(url_for("detail"))
+        return redirect(post_id)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("login"))
 

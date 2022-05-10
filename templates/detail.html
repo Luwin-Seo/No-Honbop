@@ -19,8 +19,8 @@
     <body>
       <div id="item_info">
         <div id="store">
-          <h1>갓덴스시 강남점</h1>
-          <p>서울 강남구 테헤란로 109 강남제일빌딩 1층 (우)06134</p>
+          <h1>{{post.title}}</h1>
+          <p>{{post.place}}</p>
           <p>02-2051-1477</p>
         </div>
         <div id="user">
@@ -33,14 +33,15 @@
             <button type="submit" class="btn btn-outline-warning">👍🏻 {{likes}}</button>
           </form>
           <i class="bi bi-hand-thumbs-up"></i>
-          <p class="user_id">유저123</p>
+          <p class="user_id">{{post.user_id}}</p>
           <p class="date">2022.05.10 18:00</p>
-          <p class="tags">#4인 이하 #더치페이 #2차 없음</p>
-          <p>저랑 같이 스시 드실분 구합니다!</p>
+          <p class="tags">{{post.tag}}</p>
+          <p>{{post.desc}}</p>
         </div>
         <form id='write' action='/detail/write' method='post'>
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="한줄 남기기" name="comment">
+            <input type="hidden" name="post_id" value={{post_id}}>
             <button class="btn btn-outline-secondary" type="submit" id="button-addon2">등록</button>
           </div>
         </form>
@@ -54,6 +55,7 @@
               <li class="list-group-item">{{comment.comment}}</li>
               <li class="list-group-item delete-li">
                 <form class='delete' action='/detail/delete' method='post'>
+                  <input type="hidden" name="post_id" value={{post_id}}>
                   <input type='hidden' name='index' value={{comment.index}}></input>
                   <button type="submit" class="btn btn-outline-danger">삭제</button>
                 </form>
