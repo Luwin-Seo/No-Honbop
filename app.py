@@ -13,8 +13,8 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'HONBOP'
 
-client = MongoClient('mongodb+srv://test:sparta@cluster0.gbr1o.mongodb.net/Cluster0?retryWrites=true&w=majority')
-db = client.dbsparta_honbob
+client = MongoClient('mongodb+srv://test:sparta@cluster0.wyhls.mongodb.net/cluster0?retryWrites=true&w=majority')
+db = client.dbsparta
 
 
 @app.route('/')
@@ -49,7 +49,6 @@ def user(username):
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
-
 @app.route('/detail')
 def detail():
     # 각 사용자의 프로필과 글을 모아볼 수 있는 공간
@@ -62,8 +61,7 @@ def detail():
         return render_template('detail.html', comments = comments)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return render_template('detail.html')
-
-
+    
 # [로그인 API]
 # id, pw를 받아서 맞춰보고, 토큰을 만들어 발급합니다.
 @app.route('/sign_in', methods=['POST'])
@@ -74,7 +72,7 @@ def sign_in():
 
     pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     result = db.users.find_one({'id': username_receive, 'pw': pw_hash})
-    # db에 저장 될 때 키 값 db.user.insert_one({'id': id_receive, 'pw': pw_hash, 'manner': 0})
+    # db에 저장 될 때 키 값 db.user.insert_one({'id': id_receive, 'pw': pw_hash, 'manner': 0}) 그래서 찾을 때 id,pw도 찾음
 
     if result is not None:
         payload = {
