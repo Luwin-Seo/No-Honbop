@@ -55,15 +55,18 @@ def user(username):
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
-@app.route('/detail')
-def detail():
+@app.route('/detail/<post_id>')
+def detail(post_id):
     # 게시글 상세 정보를 볼 수 있는 공간
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        post = db.posts.find_one({"post_id": post_id})
         comments = list(db.comments.find({}))
+        likes = len(list(db.likes.find({'post_id': post_id})))
         
-        return render_template('detail.html', comments = comments, count=1)
+        return render_template('detail.html', 
+            likes = likes, post = post, comments = comments, post_id = post_id)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("login"))
     
@@ -199,18 +202,16 @@ def update_like():
         # 좋아요 수 변경
         user_info = db.users.find_one({"username": payload["id"]})
         post_id_receive = request.form["post_id_give"]
-        type_receive = request.form["type_give"]
         action_receive = request.form["action_give"]
         doc = {
             "post_id": post_id_receive,
-            "username": user_info["username"],
-            "type": type_receive
+            "username": user_info["username"]
         }
         if action_receive =="like":
             db.likes.insert_one(doc)
         else:
             db.likes.delete_one(doc)
-        count = db.likes.count_documents({"post_id": post_id_receive, "type": type_receive})
+        count = db.likes.count_documents({"post_id": post_id_receive})
         print(count)
         return jsonify({"result": "success", 'msg': 'updated', "count": count})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
