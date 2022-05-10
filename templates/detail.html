@@ -9,13 +9,15 @@
     </head>
     <body>
       <div id="item_info">
-        <img id="pic" src="https://img1.kakaocdn.net/cthumb/local/R0x420/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fcfile%2F166DC3354E4DE28425">
         <div id="store">
           <h1>갓덴스시 강남점</h1>
           <p>서울 강남구 테헤란로 109 강남제일빌딩 1층 (우)06134</p>
           <p>02-2051-1477</p>
         </div>
         <div id="user">
+          <form id='join' action='/detail/parti' method='post'>
+            <button type="submit" class="btn btn-outline-success">참가</button>
+          </form>
           <form id='like' action='/detail/like' method='post'>
             <button type="submit" class="btn btn-outline-warning">👍🏻 {{count}}</button>
           </form>
@@ -28,22 +30,23 @@
         <form id='write' action='/detail/write' method='post'>
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="한줄 남기기" name="comment">
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">등록</button>
           </div>
-          <button type="submit" class="btn btn-outline-secondary">등록하기</button>
         </form>
         <div id='form-btns'>
-          <form id='join' action='/detail/parti' method='post'>
-            <button type="submit" class="btn btn-outline-success">참가하기</button>
-          </form>
-          <form id='cancel' action='/detail/delete' method='post'>
-            <button type="submit" class="btn btn-outline-danger">삭제하기</button>
-          </form>
+          
         </div>
         <div id="comment">
           {% for comment in comments %}
             <ul class="list-group list-group-horizontal-sm">
               <li class="list-group-item">{{comment.user_id}}</li>
               <li class="list-group-item">{{comment.comment}}</li>
+              <li class="list-group-item delete-li">
+                <form class='delete' action='/detail/delete' method='post'>
+                  <input type='hidden' name='index' value={{comment.index}}></input>
+                  <button type="submit" class="btn btn-outline-danger">삭제</button>
+                </form>
+              </li>
             </ul>
           {% endfor %}
         </div>
