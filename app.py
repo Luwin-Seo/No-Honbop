@@ -237,7 +237,7 @@ def write_comment():
         comment = request.form['comment']
         post_id = request.form['post_id']
         index = len(list(db.comments.find({},{'_id':False}))) + 1
-        print('abc',post_id)
+        
         db.comments.insert_one({
           'index': index,
           'post_id': post_id,
