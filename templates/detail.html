@@ -21,11 +21,13 @@
           <p class="tags">#4인 이하 #더치페이 #2차 없음</p>
           <p>저랑 같이 스시 드실분 구합니다!</p>
         </div>
-        <form action='/item_info' method='post'>
+        <form id='write' action='/detail/write' method='post'>
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="한줄 남기기" aria-label="Text" aria-describedby="basic-addon1">
+            <input type="text" class="form-control" placeholder="한줄 남기기" name="comment">
           </div>
           <button type="button" class="btn btn-outline-secondary">참가하기</button>
+        </form>
+        <form id='delete' action='/detail/delete' method='post'>
           <button type="button" class="btn btn-outline-danger">취소하기</button>
         </form>
         <div id="comment">
