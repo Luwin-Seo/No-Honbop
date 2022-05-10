@@ -205,7 +205,7 @@ def write_comment():
         })
         return redirect(url_for("detail"))
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("detail"))
+        return redirect(url_for("login"))
 
 @app.route('/detail/delete', methods=['POST'])
 def delete_comment():
@@ -217,7 +217,7 @@ def delete_comment():
         })
         return redirect(url_for("detail"))
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("detail"))
+        return redirect(url_for("login"))
 
 
 if __name__ == '__main__':
