@@ -157,12 +157,7 @@ def posting():
     db.posts.insert_one(doc)
     return jsonify({"result": "success", 'msg': '포스팅 성공'})
 
-
-
-
     # token_receive = request.cookies.get('mytoken')
-
-
     # try:
     #     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
     #     writer_info = db.users.find_one({'id': payload['id']}, {'_id': 0})
