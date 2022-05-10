@@ -138,15 +138,20 @@ def posting():
     place_receive = request.form['place_give']
     desc_receive = request.form['desc_give']
     tag_receive = request.form['tag_give']
+    url_receive = request.form['url_give']
     payment_receive = request.form['payment_give']
     date_receive = request.form['date_give']
+    all_posts = list(db.posts.find({}, {'_id': False}))
+    count = len(all_posts) + 1
 
     doc = {
+        'num': count,
         'post_id': post_id,
         'title': title_receive,
         'place': place_receive,
         'desc': desc_receive,
         'tag': tag_receive,
+        'url': url_receive,
         'payment': payment_receive,
         'user_id': payload['id'],
         'date': date_receive,

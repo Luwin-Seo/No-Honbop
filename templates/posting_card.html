@@ -163,15 +163,20 @@
 
         function posting() {
 
+            let place = $("#cp").text()
+            let address = $("#ca").text()
+            let url = $("#cu").text()
+
             $.ajax({
                 type: 'POST',
                 url: '/posting',
                 data: {
                     title_give: $("#title").val(),
-                    place_give: $("#place").val(),
-                    address_give: $('#address').val(),
+                    place_give: place,
+                    address_give: address,
                     desc_give: $("#desc").val(),
                     tag_give: $("#tag").val(),
+                    url_give: url,
                     payment_give: $("#payment").val(),
                     date_give: new Date().toISOString()
                 },
@@ -180,6 +185,11 @@
                     window.location.reload()
                 }
             });
+        }
+
+        function test() {
+            let place = $("#cp").text()
+            alert(place)
         }
     </script>
 </head>
@@ -238,7 +248,7 @@
     </div>
     <div class="btnset">
         <button onclick="posting()" type="button" class="btn btn-primary">가앝즈아아아아아아아아!</button>
-        <button type="button" class="btn btn-danger" id="stop">잠깐 이거 아닌거 같애</button>
+        <button onclick="test()" type="button" class="btn btn-danger" id="stop">잠깐 이거 아닌거 같애</button>
     </div>
 </div>
 </div>
