@@ -49,11 +49,31 @@
         .btnset > button {
             margin-right: 10px;
         }
+
+        .button {
+
+            max-width: 480px;
+            width: 100%;
+
+            background-color: transparent;
+            color: black;
+
+            border-radius: 5px;
+            border: 1px solid lightgray;
+
+            margin-top: 10px;
+        }
+
+        .button:hover {
+            border: 1px solid black;
+            box-shadow: 0px 0px 3px 0px gray;
+        }
     </style>
     <script>
 
         function searchAddress() {
             $("#search_result").empty()
+            $("#chosen_one").empty()
             if ($("#place").val() == "") {
                 alert("검색어를 입력하세요")
             } else {
@@ -68,11 +88,12 @@
                         //호출 성공하면 작성할 내용
                         let rows = response['documents']
                         for (let i = 0; i < rows.length; i++) {
+                            let id = rows[i]['id']
                             let place = rows[i]['place_name']
                             let address = rows[i]['address_name']
                             let url = rows[i]['place_url']
 
-                            let temp_html = `<div class="card mb-3" style="max-width: 540px;" onclick="hey()" hover="border: 2px solid black">
+                            let temp_html = `<button type="button" class="button" onclick="hey(${id})">
                                             <div class="row g-0">
                                                 <div class="col-md-8">
                                                     <div class="card-body">
@@ -82,7 +103,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>`
+                                        </button>`
 
                             $("#search_result").append(temp_html)
                         }
@@ -98,6 +119,7 @@
 
         function hey(a) {
             $("#search_result").empty()
+<<<<<<< Updated upstream
             $("#chosen_one").empty()
             var q = $("#place").val(); //검색 내용
             //ajax 시작
@@ -122,6 +144,48 @@
                     }
                 },
             })
+=======
+            if ($("#place").val() == "") {
+                alert("검색어를 입력하세요")
+            } else {
+                var q = $("#place").val(); //검색 내용
+                //ajax 시작
+                $.ajax({
+                    url: 'https://dapi.kakao.com//v2/local/search/keyword',
+                    headers: {'Authorization': 'KakaoAK d1e860dcc4958625477d32113326c5ee'},
+                    type: 'GET',
+                    data: {'query': q},
+                    success: function (response) {
+                        //호출 성공하면 작성할 내용
+                        let rows = response['documents']
+                        for (let i = 0; i < rows.length; i++) {
+                            if (rows[i]['id'] == a) {
+                                let id = rows[i]['id']
+                                let place = rows[i]['place_name']
+                                let address = rows[i]['address_name']
+                                let url = rows[i]['place_url']
+
+                                let temp_html = `<button type="button" class="button">
+                                            <div class="row g-0">
+                                                <div class="col-md-8">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title" id="cp">${place}</h5>
+                                                        <p class="card-text" id="ca">${address}</p>
+                                                        <p class="card-text"><small class="text-muted" id="cu">${url}</small></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </button>`
+
+                                $("#chosen_one").append(temp_html)
+                            }
+
+                        }
+
+                    },
+                })
+            }
+>>>>>>> Stashed changes
         }
 
         function posting() {
@@ -157,7 +221,10 @@
     <div class="input-group mb-3">
         <input type="text" class="form-control" placeholder="" aria-label="내가 가고싶은 곳은 여기!"
                aria-describedby="button-addon2" id="place">
-        <button class="btn btn-outline-secondary" type="button" onclick="searchAddress()">식당 검색하기</button>
+        <button class="btn btn-outline-secondary" type="button" onclick="searchAddress()">식당 검색하기
+        </button>
+    </div>
+    <div id="chosen_one">
     </div>
     <div id="search_result">
     </div>

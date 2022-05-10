@@ -131,16 +131,31 @@ def save_img():
 
 @app.route('/posting', methods=['POST'])
 def posting():
+<<<<<<< Updated upstream
     token_receive = request.cookies.get('mytoken')
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
     post_id = len(list(db.posts.find({},{'_id':False}))) + 1
+=======
+
+    post_list = list(db.posts.find({}, {'_id': False}))
+    count = len(post_list) + 1
+
+>>>>>>> Stashed changes
     title_receive = request.form['title_give']
     place_receive = request.form['place_give']
     desc_receive = request.form['desc_give']
     tag_receive = request.form['tag_give']
+    url_receive = request.form['url_give']
     payment_receive = request.form['payment_give']
     date_receive = request.form['date_give']
+    token_receive = request.cookies.get('mytoken')
 
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        writer_info = db.users.find_one({'id': payload['id']}, {'_id': 0})
+        # 포스팅하기
+
+<<<<<<< Updated upstream
     doc = {
         'post_id': post_id,
         'title': title_receive,
@@ -179,6 +194,27 @@ def posting():
     #     return jsonify({"result": "success", 'msg': '포스팅 성공'})
     # except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
     #     return redirect(url_for("home"))
+=======
+        doc = {
+            'num': count,
+            'title': title_receive,
+            'place': place_receive,
+            'desc': desc_receive,
+            'tag': tag_receive,
+            'url': url_receive,
+            'payment': payment_receive,
+            'writer': writer_info['id'],
+            'date': date_receive,
+            'user_count': 0,
+            'like': 0
+        }
+
+        db.posts.insert_one(doc)
+
+        return jsonify({"result": "success", 'msg': '포스팅 성공'})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+>>>>>>> Stashed changes
 
 
 @app.route("/get_posts", methods=['GET'])
