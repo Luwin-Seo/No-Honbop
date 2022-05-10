@@ -180,14 +180,14 @@ def participate():
         return redirect(url_for("home"))
 
 @app.route('/detail/write', methods=['POST'])
-def comment():
+def write_comment():
     # token_receive = request.cookies.get('mytoken')
     try:
         # payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # user_info = db.users.find_one({"username": payload["id"]})
+        # user_id = db.users.find_one({"username": payload["id"]})
         comment = request.form['comment']
         db.comments.insert_one({
-          'user_info': '아이디',
+          'user_id': '아이디',
           'comment': comment
         })
         return redirect(url_for("detail"))
@@ -200,7 +200,7 @@ def delete_comment():
     try:
         # payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         db.comments.delete_many({
-          'user_info': 'abc'
+          'user_id': '아이디'
         })
         return redirect(url_for("detail"))
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
