@@ -51,6 +51,54 @@
         }
     </style>
     <script>
+
+        function searchAddress() {
+            $("#search_result").empty()
+            if ($("#place").val() == "") {
+                alert("검색어를 입력하세요")
+            } else {
+                var q = $("#place").val(); //검색 내용
+                //ajax 시작
+                $.ajax({
+                    url: 'https://dapi.kakao.com//v2/local/search/keyword',
+                    headers: {'Authorization': 'KakaoAK d1e860dcc4958625477d32113326c5ee'},
+                    type: 'GET',
+                    data: {'query': q},
+                    success: function (response) {
+                        //호출 성공하면 작성할 내용
+                        let rows = response['documents']
+                        for (let i = 0; i < rows.length; i++) {
+                            let place = rows[i]['place_name']
+                            let address = rows[i]['address_name']
+                            let url = rows[i]['place_url']
+
+                            let temp_html = `<div class="card mb-3" style="max-width: 540px;">
+                                            <div class="row g-0">
+                                                <div class="col-md-4">
+                                                    <img src="..." class="img-fluid rounded-start" alt="...">
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">${place}</h5>
+                                                        <p class="card-text">${address}</p>
+                                                        <p class="card-text"><small class="text-muted">${url}</small></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`
+
+                            $("#search_result").append(temp_html)
+                        }
+
+                        console.log(rows)
+                    },
+                    error: function (request, status, error) {
+                        alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    }
+                })
+            }
+        }
+
         function posting() {
             alert($("#place").val())
             console.log('안되는 이유를 모르겠다')
@@ -60,6 +108,7 @@
                 data: {
                     title_give: $("#title").val(),
                     place_give: $("#place").val(),
+                    address_give: $('#address').val(),
                     desc_give: $("#desc").val(),
                     tag_give: $("#tag").val(),
                     payment_give: $("#payment").val(),
@@ -81,19 +130,21 @@
         <label for="title">여기에 포스팅 제목을 적어주세요</label>
     </div>
     <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="내가 가고싶은 곳은 여기!" aria-label="내가 가고싶은 곳은 여기!"
+        <input type="text" class="form-control" placeholder="" aria-label="내가 가고싶은 곳은 여기!"
                aria-describedby="button-addon2" id="place">
-        <button class="btn btn-outline-secondary" type="button" id="search_place">식당 검색하기</button>
+        <button class="btn btn-outline-secondary" type="button" onclick="searchAddress()">식당 검색하기</button>
+    </div>
+    <div id="search_result">
     </div>
     <div class="row g-2" id="catset">
         <div class="col-md">
             <div class="form-floating">
                 <select class="form-select" id="payment" aria-label="Floating label select example">
                     <option selected>--결제 방식--</option>
-                    <option value="1">내.돈.내.먹.</option>
-                    <option value="2">무조건 n 분의 1 빵</option>
-                    <option value="3">오늘은 내가 쏜다!</option>
-                    <option value="4">무전취식 - 발빠르신 분만</option>
+                    <option value="내.돈.내.먹.">내.돈.내.먹.</option>
+                    <option value="무조건 n 분의 1 빵">무조건 n 분의 1 빵</option>
+                    <option value="오늘은 내가 쏜다!">오늘은 내가 쏜다!</option>
+                    <option value="무전취식 - 발빠르신 분만">무전취식 - 발빠르신 분만</option>
                 </select>
 
                 <label for=payment>오늘의 물주는 누구?</label>
