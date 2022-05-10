@@ -96,8 +96,32 @@
             }
         }
 
-        function hey() {
-            alert("hey")
+        function hey(a) {
+            $("#search_result").empty()
+            $("#chosen_one").empty()
+            var q = $("#place").val(); //검색 내용
+            //ajax 시작
+            $.ajax({
+                url: 'https://dapi.kakao.com//v2/local/search/keyword',
+                headers: {'Authorization': 'KakaoAK d1e860dcc4958625477d32113326c5ee'},
+                type: 'GET',
+                data: {'query': q},
+                success: function (response) {
+                    //호출 성공하면 작성할 내용
+                    let rows = response['documents']
+                    for (let i = 0; i < rows.length; i++) {
+                        if (rows[i]['id'] == a) {
+                            let place = rows[i]['place_name']
+                            let address = rows[i]['address_name']
+                            let url = rows[i]['place_url']
+
+                            let tem
+
+                        }
+
+                    }
+                },
+            })
         }
 
         function posting() {

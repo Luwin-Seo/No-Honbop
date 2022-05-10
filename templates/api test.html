@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function searchAddress() {
+            var q = "하이디라오"; //검색 내용
+            //ajax 시작
+            $.ajax({
+                url: 'https://dapi.kakao.com//v2/local/search/keyword',
+                headers: {'Authorization': 'KakaoAK d1e860dcc4958625477d32113326c5ee'},
+                type: 'GET',
+                data: {'query': q},
+                success: function (response) {
+                    //호출 성공하면 작성할 내용
+                    console.log(response)
+                },
+                error: function (request, status, error) {
+                    alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<button onclick="searchAddress()">제발 작동해라</button>
+</body>
+</html>
