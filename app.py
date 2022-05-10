@@ -71,10 +71,13 @@ def sign_in():
 @app.route('/sign_up/save', methods=['POST'])
 def sign_up():
     # 회원가입
-    username_receive = request.form['username_give']
-    password_receive = request.form['password_give']
-    password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
-    # DB에 저장
+    id_receive = request.form['id_give']
+    pw_receive = request.form['pw_give']
+
+    pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
+
+    db.users.insert_one({'id': id_receive, 'pw': pw_hash})
+
     return jsonify({'result': 'success'})
 
 
@@ -97,10 +100,28 @@ def save_img():
 
 @app.route('/posting', methods=['POST'])
 def posting():
+    title_receive = request.form['title_give']
+    place_receive = request.form['place_give']
+    desc_receive = request.form['desc_give']
+    tag_receive = request.form['tag_give']
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        writer_info = db.users.find_one({'id': payload['id']}, {'_id': 0})
         # 포스팅하기
+
+        doc = {
+            'title': title_receive,
+            'place': place_receive,
+            'desc': desc_receive,
+            'tag': tag_receive,
+            'writer': writer_info['id'],
+            'user_count': 0,
+            'like': 0
+        }
+
+        db.detail.insert_one(doc)
+
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
