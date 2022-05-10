@@ -50,6 +50,24 @@
         }
     </style>
     <script>
+        function posting() {
+            alert('왜안되지')
+            $.ajax({
+                type: 'POST',
+                url: '/posting',
+                data: {
+                    title_give: $("#title").text(),
+                    place_give: $("#place").val(),
+                    desc_give: $("#desc").val(),
+                    tag_give: $("#tag").val(),
+                    date_give: new Date().toISOString()
+                },
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.reload()
+                }
+            });
+        }
     </script>
 </head>
 
