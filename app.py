@@ -13,6 +13,9 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'HONBOP'
 
+import certifi
+
+ca = certifi.where()
 client = MongoClient('mongodb+srv://test:sparta@cluster0.wyhls.mongodb.net/cluster0?retryWrites=true&w=majority')
 db = client.dbsparta
 
@@ -124,21 +127,19 @@ def save_img():
 
 @app.route('/posting', methods=['POST'])
 def posting():
-
     title_receive = request.form['title_give']
     place_receive = request.form['place_give']
     desc_receive = request.form['desc_give']
     tag_receive = request.form['tag_give']
+    payment_receive = request.form['payment_give']
     date_receive = request.form['date_give']
-    # token_receive = request.cookies.get('mytoken')
-
-    print(title_receive, place_receive, desc_receive, tag_receive, date_receive)
 
     doc = {
         'title': title_receive,
         'place': place_receive,
         'desc': desc_receive,
         'tag': tag_receive,
+        'payment': payment_receive,
         'writer': "writer_info['id']",
         'date': date_receive,
         'user_count': 0,
@@ -147,6 +148,13 @@ def posting():
 
     db.posts.insert_one(doc)
     return jsonify({"result": "success", 'msg': '포스팅 성공'})
+
+
+
+
+    # token_receive = request.cookies.get('mytoken')
+
+
     # try:
     #     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
     #     writer_info = db.users.find_one({'id': payload['id']}, {'_id': 0})
