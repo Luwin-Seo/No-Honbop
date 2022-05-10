@@ -35,6 +35,13 @@ p {
   border-bottom: 1px solid rgb(214, 214, 214);
   margin: 0 10px;
   padding: 10px;
+  position: relative;
+}
+
+#like {
+  position: absolute;
+  left: 150px;
+  top: 0;
 }
 
 .date {
@@ -52,8 +59,14 @@ form {
   text-align: center;
 }
 
-#delete {
-  padding-top: 0;
+#form-btns {
+  text-align: center;
+}
+
+#join, #cancel {
+  display: inline;
+  margin: 0;
+  padding: 0 10px 10px 10px;
 }
 
 #item_info > form > div > input {

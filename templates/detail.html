@@ -16,6 +16,10 @@
           <p>02-2051-1477</p>
         </div>
         <div id="user">
+          <form id='like' action='/detail/like' method='post'>
+            <button type="submit" class="btn btn-outline-warning">👍🏻 {{count}}</button>
+          </form>
+          <i class="bi bi-hand-thumbs-up"></i>
           <p class="user_id">유저123</p>
           <p class="date">2022.05.10 18:00</p>
           <p class="tags">#4인 이하 #더치페이 #2차 없음</p>
@@ -25,15 +29,20 @@
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="한줄 남기기" name="comment">
           </div>
-          <button type="submit" class="btn btn-outline-secondary">참가하기</button>
+          <button type="submit" class="btn btn-outline-secondary">등록하기</button>
         </form>
-        <form id='delete' action='/detail/delete' method='post'>
-          <button type="submit" class="btn btn-outline-danger">취소하기</button>
-        </form>
+        <div id='form-btns'>
+          <form id='join' action='/detail/parti' method='post'>
+            <button type="submit" class="btn btn-outline-success">참가하기</button>
+          </form>
+          <form id='cancel' action='/detail/delete' method='post'>
+            <button type="submit" class="btn btn-outline-danger">삭제하기</button>
+          </form>
+        </div>
         <div id="comment">
           {% for comment in comments %}
             <ul class="list-group list-group-horizontal-sm">
-              <li class="list-group-item">{{comment.user_info}}</li>
+              <li class="list-group-item">{{comment.user_id}}</li>
               <li class="list-group-item">{{comment.comment}}</li>
             </ul>
           {% endfor %}
