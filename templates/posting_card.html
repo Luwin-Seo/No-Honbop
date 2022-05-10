@@ -97,9 +97,9 @@
                                             <div class="row g-0">
                                                 <div class="col-md-8">
                                                     <div class="card-body">
-                                                        <h5 class="card-title">${place}</h5>
-                                                        <p class="card-text">${address}</p>
-                                                        <p class="card-text"><small class="text-muted">${url}</small></p>
+                                                        <h5 class="card-title" id="cp">${place}</h5>
+                                                        <p class="card-text" id="ca">${address}</p>
+                                                        <p class="card-text"><small class="text-muted" id="cu">${url}</small></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -162,8 +162,7 @@
         }
 
         function posting() {
-            alert($("#place").val())
-            console.log('안되는 이유를 모르겠다')
+
             $.ajax({
                 type: 'POST',
                 url: '/posting',
