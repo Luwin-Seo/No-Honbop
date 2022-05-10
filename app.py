@@ -13,8 +13,8 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'HONBOP'
 
-client = MongoClient('mongodb+srv://test:sparta@cluster0.wyhls.mongodb.net/cluster0?retryWrites=true&w=majority')
-db = client.dbsparta
+client = MongoClient('mongodb+srv://test:sparta@cluster0.gbr1o.mongodb.net/Cluster0?retryWrites=true&w=majority')
+db = client.dbsparta_honbob
 
 
 @app.route('/')
@@ -49,11 +49,29 @@ def user(username):
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
-
+# [로그인 API]
+# id, pw를 받아서 맞춰보고, 토큰을 만들어 발급합니다.
 @app.route('/sign_in', methods=['POST'])
 def sign_in():
     # 로그인
-    return jsonify({'result': 'success'})
+    username_receive = request.form['username_give']
+    password_receive = request.form['password_give']
+
+    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+    result = db.users.find_one({'id': username_receive, 'pw': pw_hash})
+    # db에 저장 될 때 키 값 db.user.insert_one({'id': id_receive, 'pw': pw_hash, 'manner': 0})
+
+    if result is not None:
+        payload = {
+         'id': username_receive,
+         'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
+        }
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
+
+        return jsonify({'result': 'success', 'token': token})
+    # 찾지 못하면
+    else:
+        return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 
 @app.route('/sign_up/save', methods=['POST'])
