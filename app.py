@@ -133,7 +133,6 @@ def save_img():
 def posting():
     token_receive = request.cookies.get('mytoken')
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-    post_id = len(list(db.posts.find({},{'_id':False}))) + 1
     title_receive = request.form['title_give']
     place_receive = request.form['place_give']
     desc_receive = request.form['desc_give']
@@ -145,8 +144,7 @@ def posting():
     count = len(all_posts) + 1
 
     doc = {
-        'num': count,
-        'post_id': post_id,
+        'post_id': count,
         'title': title_receive,
         'place': place_receive,
         'desc': desc_receive,
