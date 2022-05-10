@@ -49,6 +49,22 @@
         }
     </style>
     <script>
+        function post() {
+            let comment = $("#textarea-post").val()
+            let today = new Date().toISOString()
+            $.ajax({
+                type: "POST",
+                url: "/posting",
+                data: {
+                    desc_give: $("#desc").val(),
+                    date_give: new Date().toISOString()
+                },
+                success: function (response) {
+                    alert('간다간다뿅간다')
+                    window.location.reload()
+                }
+            })
+        }
     </script>
 </head>
 
@@ -66,14 +82,14 @@
     <div class="row g-2" id="catset">
         <div class="col-md">
             <div class="form-floating">
-                <select class="form-select" id="payment" aria-label="Floating label select example"
-                        onchange="cat_change()">
+                <select class="form-select" id="payment" aria-label="Floating label select example">
                     <option selected>--결제 방식--</option>
                     <option value="1">내.돈.내.먹.</option>
                     <option value="2">무조건 n 분의 1 빵</option>
                     <option value="3">오늘은 내가 쏜다!</option>
                     <option value="4">무전취식 - 발빠르신 분만</option>
                 </select>
+
                 <label for=payment>오늘의 물주는 누구?</label>
             </div>
         </div>
