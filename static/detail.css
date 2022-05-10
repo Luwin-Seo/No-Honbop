@@ -7,6 +7,7 @@
   border: 1px solid rgb(214, 214, 214);
   border-radius: 5px;
   margin: 20px auto 0 auto;
+  padding-top: 10px;
 }
 
 p {
@@ -40,8 +41,10 @@ p {
 
 #like {
   position: absolute;
-  left: 150px;
-  top: 0;
+  left: 330px;
+  top: 20px;
+  padding: 0;
+  width: 60px;
 }
 
 .date {
@@ -59,8 +62,12 @@ form {
   text-align: center;
 }
 
-#form-btns {
-  text-align: center;
+#join {
+  position: absolute;
+  left: 260px;
+  top: 20px;
+  padding: 0;
+  width: 80px;
 }
 
 #join, #cancel {
@@ -69,8 +76,12 @@ form {
   padding: 0 10px 10px 10px;
 }
 
+#write {
+  padding: 20px 10px 0 10px;
+}
+
 #item_info > form > div > input {
-  width: 460px;
+  width: 360px;
 }
 
 #comment {
@@ -88,5 +99,24 @@ form {
 }
 
 #comment ul li:nth-child(2) {
-  width: 380px
+  width: 380px;
+  border-right: 0;
+}
+
+#comment .delete-li {
+  padding: 0;
+  border:0;
+}
+
+#comment .delete {
+  display: inline-block;
+  width: 54px;
+  margin: 0;
+  padding: 0;
+}
+
+#comment .delete button {
+  height: 40.5px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }

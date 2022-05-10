@@ -55,18 +55,20 @@ def user(username):
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
-@app.route('/detail')
-def detail():
-    # 각 사용자의 프로필과 글을 모아볼 수 있는 공간
-    # token_receive = request.cookies.get('mytoken')
+@app.route('/detail/<post_id>')
+def detail(post_id):
+    # 게시글 상세 정보를 볼 수 있는 공간
+    token_receive = request.cookies.get('mytoken')
     try:
-        # payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # status = (username == payload["id"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
-
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        post = db.posts.find_one({"post_id": post_id})
         comments = list(db.comments.find({}))
-        return render_template('detail.html', comments = comments)
+        likes = len(list(db.likes.find({'post_id': post_id})))
+        
+        return render_template('detail.html', 
+            likes = likes, post = post, comments = comments, post_id = post_id)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return render_template('detail.html')
+        return redirect(url_for("login"))
     
 # [로그인 API]
 # id, pw를 받아서 맞춰보고, 토큰을 만들어 발급합니다.
@@ -200,18 +202,16 @@ def update_like():
         # 좋아요 수 변경
         user_info = db.users.find_one({"username": payload["id"]})
         post_id_receive = request.form["post_id_give"]
-        type_receive = request.form["type_give"]
         action_receive = request.form["action_give"]
         doc = {
             "post_id": post_id_receive,
-            "username": user_info["username"],
-            "type": type_receive
+            "username": user_info["username"]
         }
         if action_receive =="like":
             db.likes.insert_one(doc)
         else:
             db.likes.delete_one(doc)
-        count = db.likes.count_documents({"post_id": post_id_receive, "type": type_receive})
+        count = db.likes.count_documents({"post_id": post_id_receive})
         print(count)
         return jsonify({"result": "success", 'msg': 'updated', "count": count})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
@@ -229,27 +229,33 @@ def participate():
 
 @app.route('/detail/write', methods=['POST'])
 def write_comment():
-    # token_receive = request.cookies.get('mytoken')
+    token_receive = request.cookies.get('mytoken')
     try:
-        # payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # user_id = db.users.find_one({"username": payload["id"]})
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         comment = request.form['comment']
+        index = len(list(db.comments.find({},{'_id':False}))) + 1
+        
         db.comments.insert_one({
-          'user_id': '아이디',
+          'index' : index,
+          'user_id': payload["id"],
           'comment': comment
         })
+        
         return redirect(url_for("detail"))
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("login"))
 
 @app.route('/detail/delete', methods=['POST'])
 def delete_comment():
-    # token_receive = request.cookies.get('mytoken')
+    token_receive = request.cookies.get('mytoken')
     try:
-        # payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        
         db.comments.delete_many({
-          'user_id': '아이디'
+          'index' : int(request.form['index']),
+          'user_id': payload['id']
         })
+        
         return redirect(url_for("detail"))
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("login"))
