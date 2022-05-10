@@ -76,7 +76,7 @@ def sign_up():
 
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
-    db.user.insert_one({'id': id_receive, 'pw': pw_hash})
+    db.users.insert_one({'id': id_receive, 'pw': pw_hash})
 
     return jsonify({'result': 'success'})
 
@@ -107,7 +107,7 @@ def posting():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        writer_info = db.user.find_one({'id': payload['id']}, {'_id': 0})
+        writer_info = db.users.find_one({'id': payload['id']}, {'_id': 0})
         # 포스팅하기
 
         doc = {
