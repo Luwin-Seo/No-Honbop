@@ -44,27 +44,12 @@
             align-items: center;
             margin-top: 20px;
         }
+
         .btnset > button {
             margin-right: 10px;
         }
     </style>
     <script>
-        function post() {
-            let comment = $("#textarea-post").val()
-            let today = new Date().toISOString()
-            $.ajax({
-                type: "POST",
-                url: "/posting",
-                data: {
-                    desc_give: $("#desc").val(),
-                    date_give: new Date().toISOString()
-                },
-                success: function (response) {
-                    alert('간다간다뿅간다')
-                    window.location.reload()
-                }
-            })
-        }
     </script>
 </head>
 
@@ -76,7 +61,7 @@
     </div>
     <div class="input-group mb-3">
         <input type="text" class="form-control" placeholder="내가 가고싶은 곳은 여기!" aria-label="내가 가고싶은 곳은 여기!"
-               aria-describedby="button-addon2">
+               aria-describedby="button-addon2" id="place">
         <button class="btn btn-outline-secondary" type="button" id="search_place">식당 검색하기</button>
     </div>
     <div class="row g-2" id="catset">
@@ -107,7 +92,7 @@
         </div>
     </div>
     <div class="form-floating">
-        <textarea class="form-control" placeholder="여기에 꼭 가야하는 이유!" id="comment"
+        <textarea class="form-control" placeholder="여기에 꼭 가야하는 이유!" id="desc"
                   style="height: 200px"></textarea>
         <label for="comment">여기에 꼭 가야하는 이유!</label>
     </div>
@@ -116,7 +101,7 @@
         <label for="floatingTextarea">태그는 여기에 달아주세요</label>
     </div>
     <div class="btnset">
-        <button type="button" class="btn btn-primary" id="go">가앝즈아아아아아아아아!</button>
+        <button type="button" class="btn btn-primary" onclick="posting()">가앝즈아아아아아아아아!</button>
         <button type="button" class="btn btn-danger" id="stop">잠깐 이거 아닌거 같애</button>
     </div>
 </div>

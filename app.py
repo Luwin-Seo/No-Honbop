@@ -35,6 +35,10 @@ def login():
     msg = request.args.get("msg")
     return render_template('login.html', msg=msg)
 
+@app.route('/postpop')
+def postin():
+    return render_template('posting_card.html')
+
 
 @app.route('/user/<username>')
 def user(username):
@@ -120,31 +124,50 @@ def save_img():
 
 @app.route('/posting', methods=['POST'])
 def posting():
+
     title_receive = request.form['title_give']
     place_receive = request.form['place_give']
     desc_receive = request.form['desc_give']
     tag_receive = request.form['tag_give']
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        writer_info = db.users.find_one({'id': payload['id']}, {'_id': 0})
-        # 포스팅하기
+    date_receive = request.form['date_give']
+    # token_receive = request.cookies.get('mytoken')
 
-        doc = {
-            'title': title_receive,
-            'place': place_receive,
-            'desc': desc_receive,
-            'tag': tag_receive,
-            'writer': writer_info['id'],
-            'user_count': 0,
-            'like': 0
-        }
+    print(title_receive, place_receive, desc_receive, tag_receive, date_receive)
 
-        db.detail.insert_one(doc)
+    doc = {
+        'title': title_receive,
+        'place': place_receive,
+        'desc': desc_receive,
+        'tag': tag_receive,
+        'writer': "writer_info['id']",
+        'date': date_receive,
+        'user_count': 0,
+        'like': 0
+    }
 
-        return jsonify({"result": "success", 'msg': '포스팅 성공'})
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
+    db.posts.insert_one(doc)
+    return jsonify({"result": "success", 'msg': '포스팅 성공'})
+    # try:
+    #     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    #     writer_info = db.users.find_one({'id': payload['id']}, {'_id': 0})
+    #     # 포스팅하기
+    #
+    #     doc = {
+    #         'title': title_receive,
+    #         'place': place_receive,
+    #         'desc': desc_receive,
+    #         'tag': tag_receive,
+    #         'writer': writer_info['id'],
+    #         'date': date_receive,
+    #         'user_count': 0,
+    #         'like': 0
+    #     }
+    #
+    #     db.posts.insert_one(doc)
+    #
+    #     return jsonify({"result": "success", 'msg': '포스팅 성공'})
+    # except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+    #     return redirect(url_for("home"))
 
 
 @app.route("/get_posts", methods=['GET'])
@@ -152,8 +175,12 @@ def get_posts():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # 포스팅 목록 받아오기
-        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다."})
+        #포스팅 목록 받아오기
+        posts = list(db.posts.find({})).sort("date", -1)
+        for post in posts:
+            post["_id"] = str(post["_id"])
+
+        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts":posts })
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
