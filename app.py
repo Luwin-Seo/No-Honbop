@@ -100,10 +100,11 @@ def sign_up():
     return jsonify({'result': 'success'})
 
 
-@app.route('/sign_up/check', methods=['POST'])
+@app.route('/sign_up/check_dup', methods=['POST'])
 def check_dup():
-    # ID 중복확인
-    return jsonify({'result': 'success'})
+    username_receive = request.form['username_give']
+    exists = bool(db.users.find_one({"id": username_receive}))
+    return jsonify({'result': 'success', 'exists': exists})
 
 
 @app.route('/update_profile', methods=['POST'])
