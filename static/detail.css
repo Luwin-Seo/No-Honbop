@@ -52,6 +52,10 @@ form {
   text-align: center;
 }
 
+#delete {
+  padding-top: 0;
+}
+
 #item_info > form > div > input {
   width: 460px;
 }

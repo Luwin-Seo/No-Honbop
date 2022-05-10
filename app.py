@@ -49,6 +49,18 @@ def user(username):
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
+@app.route('/detail')
+def detail():
+    # 각 사용자의 프로필과 글을 모아볼 수 있는 공간
+    # token_receive = request.cookies.get('mytoken')
+    try:
+        # payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        # status = (username == payload["id"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
+
+        comments = list(db.comments.find({}))
+        return render_template('detail.html', comments = comments)
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return render_template('detail.html')
 
 @app.route('/sign_in', methods=['POST'])
 def sign_in():
@@ -148,23 +160,30 @@ def participate():
 
 @app.route('/detail/write', methods=['POST'])
 def comment():
-    token_receive = request.cookies.get('mytoken')
+    # token_receive = request.cookies.get('mytoken')
     try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # 포스팅하기
-        return jsonify({"result": "success", 'msg': '댓글 성공'})
+        # payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        # user_info = db.users.find_one({"username": payload["id"]})
+        comment = request.form['comment']
+        db.comments.insert_one({
+          'user_info': '아이디',
+          'comment': comment
+        })
+        return redirect(url_for("detail"))
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
+        return redirect(url_for("detail"))
 
 @app.route('/detail/delete', methods=['POST'])
 def delete_comment():
-    token_receive = request.cookies.get('mytoken')
+    # token_receive = request.cookies.get('mytoken')
     try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # 포스팅하기
-        return jsonify({"result": "success", 'msg': '삭제 성공'})
+        # payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        db.comments.delete_many({
+          'user_info': 'abc'
+        })
+        return redirect(url_for("detail"))
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
+        return redirect(url_for("detail"))
 
 
 if __name__ == '__main__':
