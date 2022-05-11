@@ -161,18 +161,17 @@
         }
 
                 function cat_change() {
-            alert('hey')
             $('#spannel_show').empty()
             let temp_html = ``
             if ($('#searching_methode').val() == 1) {
-                temp_html = `<div class="form-floating">
-                                <input type="text" id="key_m" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2">
+                temp_html = `<div class="input-group mb-3">
+                                <input type="text" id="key_m" style="height: 58px" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2">
                             <button class="btn btn-outline-secondary" type="button">Button</button>
                             </div>`
             }
             else if ($('#searching_methode').val() == 2) {
-                temp_html = `<div class="form-floating">
-                                <input type="date" id="date_m" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2">
+                temp_html = `<div class="input-group mb-3">
+                                <input type="date" id="date_m" style="height: 58px" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2">
                             <button class="btn btn-outline-secondary" type="button">Button</button>
                             </div>`
             }
@@ -310,7 +309,7 @@
         <div class="col-md" id="spannel_show">
         </div>
     </div>
-    <div id="post-box" class="container">
+    <div id="post-box" class="container" style="margin-top: 20px">
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for post in posts %}
                 {% set place = post["place"] %}
