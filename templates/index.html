@@ -163,7 +163,7 @@
     </div>
     <figure class="media-left" style="align-self: center">
         <a class="image is-32x32" href="/user/{{ user_info.username }}">
-            <img class="is-rounded" src="{{ url_for('static', filename=user_info.profile_pic_real) }}">
+            <img class="is-rounded" src="{{ url_for("static", filename="profile_pics/profile_placeholder.png") }}">
         </a>
         ㅇㅇ 님
     </figure>
@@ -268,35 +268,57 @@
 {#        포스팅된 데이터 불러오는 곳#}
 <section class="section">
     <div id="post-box" class="container">
-        <div class="box">
-            <article class="media">
-                <div class="media-left">
-                    <a class="image is-64x64" href="#">
-                        <img class="is-rounded"
-                             src={{ url_for("static", filename="profile_pics/profile_placeholder.png") }}>
-                    </a>
-                </div>
-                <div class="media-content">
-                    <div class="content">
-                        <p>
-                            <strong>홍길동</strong> <small>@username</small> <small>10분 전</small>
-                            <br>
-                            글을 적는 칸
-                        </p>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">식당이름</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">유저네임</h6>
+                        <p class="card-text">설명</p>
+                        <a href="/detail/{{ post_id }}" class="btn btn-outline-danger">더 자세히 보기</a>
                     </div>
-                    <nav class="level is-mobile">
-                        <div class="level-left">
-                            <a class="level-item is-sparta" aria-label="heart"
-                               onclick="toggle_like('', 'heart')">
-                                        <span class="icon is-small"><i class="fa fa-heart"
-                                                                       aria-hidden="true"></i></span>&nbsp;<span
-                                    class="like-num">2.7k</span>
-                            </a>
-                        </div>
-
-                    </nav>
                 </div>
-            </article>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">식당이름</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">유저네임</h6>
+                        <p class="card-text">설명</p>
+                        <a href="/detail/{{ post_id }}" class="btn btn-outline-danger">더 자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">식당이름</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">유저네임</h6>
+                        <p class="card-text">설명</p>
+                        <a href="/detail/{{ post_id }}" class="btn btn-outline-danger">더 자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">식당이름</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">유저네임</h6>
+                        <p class="card-text">설명</p>
+                        <a href="/detail/{{ post_id }}" class="btn btn-outline-danger">더 자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">식당이름</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">유저네임</h6>
+                        <p class="card-text">설명</p>
+                        <a href="/detail/{{ post_id }}" class="btn btn-outline-danger">더 자세히 보기</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
