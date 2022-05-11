@@ -166,7 +166,7 @@
             if ($('#searching_methode').val() == 1) {
                 temp_html = `<div class="input-group mb-3">
                                 <input type="text" id="key_m" style="height: 58px" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2">
-                            <button class="btn btn-outline-secondary" type="button">Button</button>
+                            <button class="btn btn-outline-secondary" type="button" onclick="key_search()">Button</button>
                             </div>`
             }
             else if ($('#searching_methode').val() == 2) {
@@ -176,6 +176,16 @@
                             </div>`
             }
             $('#spannel_show').append(temp_html)
+        }
+
+        function key_search() {
+            $("#post-box").empty()
+            let keyword = $("#key_m").val()
+
+
+
+
+
         }
     </script>
 
@@ -310,7 +320,7 @@
         </div>
     </div>
     <div id="post-box" class="container" style="margin-top: 20px">
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="post-box">
             {% for post in posts %}
                 {% set place = post["place"] %}
                 {% set address = post["address"] %}
