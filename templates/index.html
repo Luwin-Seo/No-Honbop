@@ -60,6 +60,8 @@
                             let url = rows[i]['place_url']
                             let category = rows[i]['category_name']
 
+
+
                             if (rows[i]['category_group_code'] == "FD6") {
 
                                 let temp_html = `<button type="button" class="button" onclick="hey(${id})">
@@ -166,33 +168,53 @@
             });
         }
 
-                function cat_change() {
-            $('#spannel_show').empty()
-            let temp_html = ``
-            if ($('#searching_methode').val() == 1) {
-                temp_html = `<div class="input-group mb-3">
-                                <input type="text" id="key_m" style="height: 58px" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2">
-                            <button class="btn btn-outline-secondary" type="button" onclick="key_search()">Button</button>
-                            </div>`
-            }
-            else if ($('#searching_methode').val() == 2) {
-                temp_html = `<div class="input-group mb-3">
-                                <input type="date" id="date_m" style="height: 58px" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2">
-                            <button class="btn btn-outline-secondary" type="button">Button</button>
-                            </div>`
-            }
-            $('#spannel_show').append(temp_html)
-        }
-
         function key_search() {
             $("#post-box").empty()
             let keyword = $("#key_m").val()
+            let pdate = $("#date_m").val()
+            $.ajax({
+                type: 'GET',
+                url: "/database",
+                data: {},
+                success: function (response) {
+                    let rows = response['posts']
+                    for (let i = 0; i < rows.length; i++) {
+                        let title = rows[i]['title']
+                        let place = rows[i]['place']
+                        let address = rows[i]['address']
+                        let tag = rows[i]['tag']
+                        let adate = rows[i]['date']
+                        let category = rows[i]['category']
+                        let post_id = rows[i]['post_id']
+                        if (adate != pdate) {}
+                        else {
+                            if (title.includes(keyword)||place.includes(keyword)||address.includes(keyword)||tag.includes(keyword)) {
+                                console.log(title,place,address,tag,adate)
+
+                                let temp_html = `<div class="col">
+                                                    <div class="card h-100">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">${place}</h5>
+                                                            <h6 class="card-subtitle mb-2 text-muted">${category}</h6>
+                                                            <p class="card-text">${adate}</p>
+                                                            <p class="card-text">${address}</p>
+                                                            <a href="detail/${post_id}" class="btn btn-outline-warning" style="margin-top: 10px">더 자세히 보기</a>
+                                                        </div>
+                                                    </div>
+                                                </div>`
+
+                                $("#post-box").append(temp_html)
+
+                            }
+                        }
 
 
 
-
-
+                    }
+                }
+            })
         }
+
     </script>
 
 </head>
@@ -318,19 +340,20 @@
     <div class="row g-2">
         <div class="col-md">
             <div class="form-floating">
-               <select class="form-select" id="searching_methode" aria-label="Floating label select example"
-                        onchange="cat_change()">
-                    <option selected>검색방법 설정</option>
-                    <option value="1">키워드로 검색</option>
-                    <option value="2">날짜로 검색</option>
-                </select>
-                <label for="uppercat">검색방법을 설정하세요</label>
+                <input type="date" class="form-control" id="date_m" placeholder=""
+                       value="">
+                <label for="date_m">날짜는 여기에</label>
             </div>
         </div>
-        <div class="col-md" id="spannel_show">
+        <div class="col-md">
+            <div class="input-group mb-3">
+                <input type="text" id="key_m" style="height: 58px" class="form-control" placeholder="키워드는 여기"
+                       aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary" type="button" onclick="key_search()">검색하기</button>
+            </div>
         </div>
     </div>
-    <div id="post-box" class="container" style="margin-top: 20px">
+    <div class="container" style="margin-top: 20px">
         <div class="row row-cols-1 row-cols-md-3 g-4" id="post-box">
             {% for post in posts %}
                 {% set place = post["place"] %}

@@ -73,6 +73,17 @@ input::-webkit-calendar-picker-indicator {
     margin-top: 20px;
 }
 
+.qset > * {
+    width: 40%;
+    max-width: 240px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 10px;
+}
+
 .btnset > button {
     margin-right: 10px;
 }
