@@ -166,6 +166,8 @@
             let place = $("#cp").text()
             let address = $("#ca").text()
             let url = $("#cu").text()
+            let date = $("#date").val()
+            let time = $("#time").val()
 
             $.ajax({
                 type: 'POST',
@@ -178,7 +180,10 @@
                     tag_give: $("#tag").val(),
                     url_give: url,
                     payment_give: $("#payment").val(),
-                    date_give: new Date().toISOString()
+                    datenow_give: new Date().toISOString(),
+                    date_give: date,
+                    time_give: $("#time").val(),
+                    maxcount_give: $("#maxcount").val()
                 },
                 success: function (response) {
                     alert(response['msg'])
@@ -188,7 +193,7 @@
         }
 
         function test() {
-            let place = $("#cp").text()
+            let place = $("#maxcount").val()
             alert(place)
         }
     </script>
@@ -209,6 +214,16 @@
     <div id="chosen_one">
     </div>
     <div id="search_result">
+    </div>
+    <div>
+        <div class="form-floating mb-3">
+            <input type="date" class="form-control" id="date" placeholder="">
+            <label for="date">날짜를 정하세요</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="time" class="form-control" id="time" placeholder="">
+            <label for="time">시간을 정하세요</label>
+        </div>
     </div>
     <div class="row g-2" id="catset">
         <div class="col-md">
