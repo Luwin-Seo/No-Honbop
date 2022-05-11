@@ -90,3 +90,15 @@ input::-webkit-calendar-picker-indicator {
     border: 1px solid black;
     box-shadow: 0px 0px 3px 0px gray;
 }
+
+.media-content > .field > .control > button {
+    margin-top: 50px;
+}
+
+.media-left {
+    display: flex;
+    flex-direction: row;
+}
+
+.media-left > .image {
+    margin-right: 10px;
