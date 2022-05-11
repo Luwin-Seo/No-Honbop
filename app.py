@@ -67,7 +67,7 @@ def detail(post_id):
         post = db.posts.find_one({"post_id": int(post_id)})
         comments = list(db.comments.find({'post_id': post_id}))
         likes = db.likes.count_documents({"post_id": post_id})
-        party = db.party.count_documents({"post_id": post_id})
+        party = list(db.party.find({"post_id": post_id}))
 
         return render_template('detail.html', 
             likes=likes, post=post, comments=comments, post_id=post_id, party=party)
