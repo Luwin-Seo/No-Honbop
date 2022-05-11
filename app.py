@@ -26,7 +26,7 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
-        user_info = db.users.find_one({"username": payload["id"]})
+        user_info = db.users.find_one({"id": payload["id"]})
         posts = list(db.posts.find({}))
         return render_template('index.html', user_info=user_info, posts=posts)
 
@@ -53,7 +53,7 @@ def user(username):
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         status = (username == payload["id"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
 
-        user_info = db.users.find_one({"username": username}, {"_id": False})
+        user_info = db.users.find_one({"id": username}, {"_id": False})
         return render_template('user.html', user_info=user_info, status=status)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
