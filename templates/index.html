@@ -8,6 +8,9 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -20,8 +23,7 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!--mystyle.css-->
     <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet">
-    <!-- JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
     <!-- 구글 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Jua&display=swap" rel="stylesheet">
 
@@ -30,7 +32,11 @@
 
 
     <script>
-
+         function sign_out() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('로그아웃!')
+            window.location.href = "/login"
+        }
         function searchAddress() {
             $("#search_result").empty()
             $("#chosen_one").empty()
@@ -203,6 +209,11 @@
             <img class="is-rounded" src="{{ url_for("static", filename="profile_pics/profile_placeholder.png") }}">
         </a>
         <p>{{ user_info.id }} 님</p>
+        <a class="button level-item has-text-centered is-sparta is-outlined" aria-label="logout"
+           onclick="sign_out()">
+            로그아웃&nbsp;&nbsp;&nbsp;<span class="icon is-small"><i class="fa fa-sign-out"
+                                                                 aria-hidden="true"></i></span>
+        </a>
     </figure>
 </nav>
 <section class="section">
