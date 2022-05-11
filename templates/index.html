@@ -53,7 +53,9 @@
                             let address = rows[i]['address_name']
                             let url = rows[i]['place_url']
 
-                            let temp_html = `<button type="button" class="button" onclick="hey(${id})">
+                            if (rows[i]['category_group_code'] == "FD6") {
+
+                                let temp_html = `<button type="button" class="button" onclick="hey(${id})">
                                             <div class="row g-0">
                                                 <div class="col-md-8">
                                                     <div class="card-body">
@@ -65,7 +67,8 @@
                                             </div>
                                         </button>`
 
-                            $("#search_result").append(temp_html)
+                                $("#search_result").append(temp_html)
+                            }
                         }
 
                         console.log(rows)
