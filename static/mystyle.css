@@ -34,7 +34,6 @@ body {
 input::-webkit-calendar-picker-indicator {
     display: none;
 }
-}
 
 .image img {
     object-fit:cover;
