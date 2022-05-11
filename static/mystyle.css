@@ -26,8 +26,10 @@ body {
 
 .button.is-sparta.is-outlined {
     background-color: transparent;
-    border-color: #e8344e;
-    color: #e8344e !important;
+    border-color: #ffc720;
+    color: #ffc720 !important;
+    width: 100px;
+    margin-left: 20px;
 }
 
 .modal-content {
@@ -104,6 +106,7 @@ input::-webkit-calendar-picker-indicator {
     display: flex;
     flex-direction: row;
     align-items: center;
+    width: 250px;
 }
 
 .media-left > .image {
