@@ -3,7 +3,7 @@
 <head>
 
     <!-- Webpage Title -->
-    <title>Home | SWEETER</title>
+    <title>Home | 혼밥은 싫어</title>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -162,16 +162,16 @@
         </a>
     </div>
     <figure class="media-left" style="align-self: center">
-        <a class="image is-32x32" href="/user/{{ user_info.username }}">
+        <a class="image is-32x32" href="/user/{{ user_info.id }}">
             <img class="is-rounded" src="{{ url_for("static", filename="profile_pics/profile_placeholder.png") }}">
         </a>
-        ㅇㅇ 님
+        <p>{{ user_info.id }} 님</p> 님
     </figure>
 </nav>
 <section class="section">
     <article class="media">
 {#        <figure class="media-left" style="align-self: center">#}
-{#            <a class="image is-32x32" href="/user/{{ user_info.username }}">#}
+{#            <a class="image is-32x32" href="/user/{{ user_info.id }}">#}
 {#                <img class="is-rounded" src="{{ url_for('static', filename=user_info.profile_pic_real) }}">#}
 {#            </a>#}
 {#        </figure>#}
@@ -269,56 +269,21 @@
 <section class="section">
     <div id="post-box" class="container">
         <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">식당이름</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">유저네임</h6>
-                        <p class="card-text">설명</p>
-                        <a href="/detail/{{ post_id }}" class="btn btn-outline-danger">더 자세히 보기</a>
+            {% for post in posts %}
+                {% set id = post["user_id"] %}
+                {% set place = post["place"] %}
+                {% set desc = post["desc"] %}
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ place }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ id }}</h6>
+                            <p class="card-text">{{ desc }}</p>
+                            <a href="/detail/{{ post_id }}" class="btn btn-outline-danger">더 자세히 보기</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">식당이름</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">유저네임</h6>
-                        <p class="card-text">설명</p>
-                        <a href="/detail/{{ post_id }}" class="btn btn-outline-danger">더 자세히 보기</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">식당이름</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">유저네임</h6>
-                        <p class="card-text">설명</p>
-                        <a href="/detail/{{ post_id }}" class="btn btn-outline-danger">더 자세히 보기</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">식당이름</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">유저네임</h6>
-                        <p class="card-text">설명</p>
-                        <a href="/detail/{{ post_id }}" class="btn btn-outline-danger">더 자세히 보기</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">식당이름</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">유저네임</h6>
-                        <p class="card-text">설명</p>
-                        <a href="/detail/{{ post_id }}" class="btn btn-outline-danger">더 자세히 보기</a>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
 
     </div>
