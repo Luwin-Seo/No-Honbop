@@ -141,6 +141,7 @@ def posting():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         title_receive = request.form['title_give']
         place_receive = request.form['place_give']
+        address_receive = request.form['address_give']
         desc_receive = request.form['desc_give']
         tag_receive = request.form['tag_give']
         url_receive = request.form['url_give']
@@ -159,6 +160,7 @@ def posting():
             'desc': desc_receive,
             'tag': tag_receive,
             'url': url_receive,
+            'address': address_receive,
             'payment': payment_receive,
             'user_id': payload['id'],
             'datenow': datenow_receive,

@@ -273,15 +273,15 @@
     <div id="post-box" class="container">
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for post in posts %}
-                {% set place = post["title"] %}
-                {% set id = post["user_id"] %}
-                {% set desc = post["date"] + " " + post["time"] %}
+                {% set place = post["place"] %}
+                {% set address = post["address"] %}
+                {% set date = post["date"] + " " + post["time"] %}
                 <div class="col">
                     <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title">{{ place }}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">{{ id }}</h6>
-                            <p class="card-text">{{ desc }}</p>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ address }}</h6>
+                            <p class="card-text">{{ date }}</p>
                             <a href="detail/{{ post["post_id"] }}" class="btn btn-outline-danger">더 자세히 보기</a>
                         </div>
                     </div>
