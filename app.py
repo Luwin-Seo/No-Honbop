@@ -239,10 +239,10 @@ def write_comment():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         comment = request.form['comment']
         post_id = request.form['post_id']
-        index = len(list(db.comments.find({},{'_id':False}))) + 1
+        index = db.counts.find_one_and_update({ 'name': 'comment' }, { '$inc': { 'count': 1 } })
         
         db.comments.insert_one({
-          'index': index,
+          'index': index['count'] + 1,
           'post_id': post_id,
           'user_id': payload["id"],
           'comment': comment
