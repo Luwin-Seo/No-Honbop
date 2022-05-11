@@ -11,7 +11,7 @@
       <div id="item_info">
         <div id="store">
           <h1>{{post.title}}</h1>
-          <p>{{post.place}}</p>
+          <p>약속 장소</p>
           <p>02-2051-1477</p>
         </div>
         <div id="user">
@@ -23,10 +23,9 @@
             <input type="hidden" name="post_id" value={{post_id}}>
             <button type="submit" class="btn btn-outline-warning">👍🏻 {{likes}}</button>
           </form>
-          <i class="bi bi-hand-thumbs-up"></i>
           <p class="user_id">{{post.user_id}}</p>
-          <p class="date">2022.05.12 18:00</p>
-          <p class="tags">#{{post.payment}} {{post.tag}}</p>
+          <p class="date">{{post.date}} {{post.time}}</p>
+          <p class="tags">#{{post.payment}} #최대 {{post.maxcount}}인 {{post.tag}}</p>
           <p>{{post.desc}}</p>
         </div>
         <form id='write' action='/detail/write' method='post'>
