@@ -159,6 +159,25 @@
                 }
             });
         }
+
+                function cat_change() {
+            alert('hey')
+            $('#spannel_show').empty()
+            let temp_html = ``
+            if ($('#searching_methode').val() == 1) {
+                temp_html = `<div class="form-floating">
+                                <input type="text" id="key_m" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <button class="btn btn-outline-secondary" type="button">Button</button>
+                            </div>`
+            }
+            else if ($('#searching_methode').val() == 2) {
+                temp_html = `<div class="form-floating">
+                                <input type="date" id="date_m" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <button class="btn btn-outline-secondary" type="button">Button</button>
+                            </div>`
+            }
+            $('#spannel_show').append(temp_html)
+        }
     </script>
 
 </head>
@@ -276,8 +295,20 @@
 
 {#        포스팅된 데이터 불러오는 곳#}
 <section class="section">
-    <div>
-
+    <div class="row g-2">
+        <div class="col-md">
+            <div class="form-floating">
+               <select class="form-select" id="searching_methode" aria-label="Floating label select example"
+                        onchange="cat_change()">
+                    <option selected>검색방법 설정</option>
+                    <option value="1">키워드로 검색</option>
+                    <option value="2">날짜로 검색</option>
+                </select>
+                <label for="uppercat">검색방법을 설정하세요</label>
+            </div>
+        </div>
+        <div class="col-md" id="spannel_show">
+        </div>
     </div>
     <div id="post-box" class="container">
         <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -286,6 +317,7 @@
                 {% set address = post["address"] %}
                 {% set date = post["date"] + " " + post["time"] %}
                 {% set category = post["category"] %}
+
                 <div class="col">
                     <div class="card h-100">
                         <div class="card-body">
