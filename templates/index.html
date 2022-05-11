@@ -109,19 +109,26 @@
                     style="font-family: 'Stylish', sans-serif;font-size: larger;">🍚 혼밥은 싫어</strong>
         </a>
     </div>
+    <figure class="media-left" style="align-self: center">
+        <a class="image is-32x32" href="/user/{{ user_info.username }}">
+            <img class="is-rounded" src="{{ url_for('static', filename=user_info.profile_pic_real) }}">
+        </a>
+        ㅇㅇ 님
+    </figure>
 </nav>
 <section class="section">
     <article class="media">
-        <figure class="media-left" style="align-self: center">
-            <a class="image is-32x32" href="/user/{{ user_info.username }}">
-                <img class="is-rounded" src="{{ url_for('static', filename=user_info.profile_pic_real) }}">
-            </a>
-        </figure>
+{#        <figure class="media-left" style="align-self: center">#}
+{#            <a class="image is-32x32" href="/user/{{ user_info.username }}">#}
+{#                <img class="is-rounded" src="{{ url_for('static', filename=user_info.profile_pic_real) }}">#}
+{#            </a>#}
+{#        </figure>#}
         <div class="media-content">
             <div class="field">
                 <p class="control">
-                    <input id="input-post" class="input is-rounded" placeholder="무슨 생각을 하고 계신가요?"
-                           onclick='$("#modal-post").addClass("is-active")'></p>
+                    <button class="button is-danger is-rounded" id="input-post"
+                           onclick='$("#modal-post").addClass("is-active")'>오늘의 밥 친구 만들기</button>
+                </p>
             </div>
         </div>
     </article>
@@ -199,31 +206,10 @@
                     <button onclick="posting()" type="button" class="btn btn-primary">가앝즈아아아아아아아아!</button>
                     <button type="button" class="btn btn-danger" id="stop">잠깐 이거 아닌거 같애</button>
                 </div>
-<<<<<<< Updated upstream
-            </div>
-<<<<<<< Updated upstream
-        </section>
-        <div style="font-size:50px; text-align:center">
-          <a href='detail/1'>1번 아이템(/detail/1)</a>
-          <a href='detail/2'>2번 아이템(/detail/2)</a>
-        </div>
-=======
-=======
-                <div class="form-floating">
-        <textarea class="form-control" placeholder="여기에 꼭 가야하는 이유!" id="desc"
-                  style="height: 200px"></textarea>
-                    <label for="comment">여기에 꼭 가야하는 이유!</label>
-                </div>
-                <div class="form-floating">
-                    <textarea class="form-control" placeholder="태그 달기" id="tag"></textarea>
-                    <label for="floatingTextarea">태그는 여기에 달아주세요</label>
-                </div>
-                <div class="btnset">
-                    <button onclick="posting()" type="button" class="btn btn-primary">가앝즈아아아아아아아아!</button>
-                    <button type="button" class="btn btn-danger" id="stop">잠깐 이거 아닌거 같애</button>
-                </div>
-            </div>
->>>>>>> Stashed changes
+                </div> 
+               </div>
+               </div>
+            </section>
         </div>
     </div>
     <button class="modal-close is-large" aria-label="close"
@@ -231,7 +217,7 @@
     </div>
 </section>
 
->>>>>>> Stashed changes
+
 {#        포스팅된 데이터 불러오는 곳#}
 <section class="section">
     <div id="post-box" class="container">

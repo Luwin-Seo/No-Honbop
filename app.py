@@ -133,56 +133,47 @@ def save_img():
 @app.route('/posting', methods=['POST'])
 def posting():
     token_receive = request.cookies.get('mytoken')
-    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-    title_receive = request.form['title_give']
-    place_receive = request.form['place_give']
-    desc_receive = request.form['desc_give']
-    tag_receive = request.form['tag_give']
-    url_receive = request.form['url_give']
-    payment_receive = request.form['payment_give']
-    date_receive = request.form['date_give']
-    all_posts = list(db.posts.find({}, {'_id': False}))
-    count = len(all_posts) + 1
 
-    doc = {
-        'post_id': count,
-        'title': title_receive,
-        'place': place_receive,
-        'desc': desc_receive,
-        'tag': tag_receive,
-        'url': url_receive,
-        'payment': payment_receive,
-        'user_id': payload['id'],
-        'date': date_receive,
-        'user_count': 0,
-        'like': 0
-    }
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        writer_info = db.users.find_one({'id': payload['id']}, {'_id': 0})
+        # 포스팅하기
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        title_receive = request.form['title_give']
+        place_receive = request.form['place_give']
+        desc_receive = request.form['desc_give']
+        tag_receive = request.form['tag_give']
+        url_receive = request.form['url_give']
+        payment_receive = request.form['payment_give']
+        datenow_receive = request.form['datenow_give']
+        date_receive = request.form['date_give']
+        time_receive = request.form['time_give']
+        maxcount_receice = request.form['maxcount_give']
+        all_posts = list(db.posts.find({}, {'_id': False}))
+        count = len(all_posts) + 1
 
-    db.posts.insert_one(doc)
-    return jsonify({"result": "success", 'msg': '포스팅 성공'})
+        doc = {
+            'post_id': count,
+            'title': title_receive,
+            'place': place_receive,
+            'desc': desc_receive,
+            'tag': tag_receive,
+            'url': url_receive,
+            'payment': payment_receive,
+            'user_id': payload['id'],
+            'datenow': datenow_receive,
+            'date': date_receive,
+            'time': time_receive,
+            'maxcount': maxcount_receice,
+            'user_count': 0,
+            'like': 0
+        }
 
-    # token_receive = request.cookies.get('mytoken')
-    # try:
-    #     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-    #     writer_info = db.users.find_one({'id': payload['id']}, {'_id': 0})
-    #     # 포스팅하기
-    #
-    #     doc = {
-    #         'title': title_receive,
-    #         'place': place_receive,
-    #         'desc': desc_receive,
-    #         'tag': tag_receive,
-    #         'writer': writer_info['id'],
-    #         'date': date_receive,
-    #         'user_count': 0,
-    #         'like': 0
-    #     }
-    #
-    #     db.posts.insert_one(doc)
-    #
-    #     return jsonify({"result": "success", 'msg': '포스팅 성공'})
-    # except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-    #     return redirect(url_for("home"))
+        db.posts.insert_one(doc)
+
+        return jsonify({"result": "success", 'msg': '포스팅 성공'})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 
 @app.route("/get_posts", methods=['GET'])
@@ -198,7 +189,6 @@ def get_posts():
         return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts":posts })
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
-
 
 @app.route('/detail/like', methods=['POST'])
 def update_like():
