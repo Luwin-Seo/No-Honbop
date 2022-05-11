@@ -1,3 +1,7 @@
+* {
+    font-family: 'Jua', sans-serif;
+}
+
 body {
     background-color: RGBA(232, 52, 78, 0.2);
     min-height: 100vh;
@@ -92,6 +96,7 @@ input::-webkit-calendar-picker-indicator {
 }
 
 .media-content > .field > .control > button {
+    font-family: 'Jua', sans-serif;
     margin-top: 50px;
 }
 
