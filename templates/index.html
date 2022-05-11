@@ -52,6 +52,7 @@
                             let place = rows[i]['place_name']
                             let address = rows[i]['address_name']
                             let url = rows[i]['place_url']
+                            let category = rows[i]['category_name']
 
                             if (rows[i]['category_group_code'] == "FD6") {
 
@@ -59,9 +60,10 @@
                                             <div class="row g-0">
                                                 <div class="col-md-8">
                                                     <div class="card-body">
-                                                        <h5 class="card-title" id="cp">${place}</h5>
-                                                        <p class="card-text" id="ca">${address}</p>
-                                                        <p class="card-text"><small class="text-muted" id="cu">${url}</small></p>
+                                                        <h5 class="card-title">${place}</h5>
+                                                        <p class="card-text">${address}</p>
+                                                        <p class="card-text">${category}</p>
+                                                        <p class="card-text"><small class="text-muted">${url}</small></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -101,6 +103,7 @@
                                 let place = rows[i]['place_name']
                                 let address = rows[i]['address_name']
                                 let url = rows[i]['place_url']
+                                let category = rows[i]['category_name']
 
                                 let temp_html = `<button type="button" class="button">
                                             <div class="row g-0">
@@ -108,6 +111,7 @@
                                                     <div class="card-body">
                                                         <h5 class="card-title" id="cp">${place}</h5>
                                                         <p class="card-text" id="ca">${address}</p>
+                                                        <p class="card-text" id="cc">${category}</p>
                                                         <p class="card-text"><small class="text-muted" id="cu">${url}</small></p>
                                                     </div>
                                                 </div>
@@ -130,6 +134,7 @@
             let address = $("#ca").text()
             let url = $("#cu").text()
             let date = $("#date").val()
+            let category = $("#cc").text()
 
             $.ajax({
                 type: 'POST',
@@ -144,6 +149,7 @@
                     payment_give: $("#payment").val(),
                     datenow_give: new Date().toISOString(),
                     date_give: date,
+                    category_give: category,
                     time_give: $("#time").val(),
                     maxcount_give: $("#maxcount").val()
                 },
@@ -270,19 +276,24 @@
 
 {#        포스팅된 데이터 불러오는 곳#}
 <section class="section">
+    <div>
+
+    </div>
     <div id="post-box" class="container">
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for post in posts %}
                 {% set place = post["place"] %}
                 {% set address = post["address"] %}
                 {% set date = post["date"] + " " + post["time"] %}
+                {% set category = post["category"] %}
                 <div class="col">
                     <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title">{{ place }}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">{{ address }}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ category }}</h6>
                             <p class="card-text">{{ date }}</p>
-                            <a href="detail/{{ post["post_id"] }}" class="btn btn-outline-danger">더 자세히 보기</a>
+                            <p class="card-text">{{ address }}</p>
+                            <a href="detail/{{ post["post_id"] }}" class="btn btn-outline-danger" style="margin-top: 10px">더 자세히 보기</a>
                         </div>
                     </div>
                 </div>
