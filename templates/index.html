@@ -167,14 +167,14 @@
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
             <strong class="is-sparta"
-                    style="font-family: 'Dongle', sans-serif;font-size: larger;">🍚 혼밥은 싫어</strong>
+                    style="font-family: 'Dongle', sans-serif;font-size: larger;">😢 혼밥은 싫어</strong>
         </a>
     </div>
     <figure class="media-left" style="align-self: center">
         <a class="image is-32x32" href="/user/{{ user_info.id }}">
             <img class="is-rounded" src="{{ url_for("static", filename="profile_pics/profile_placeholder.png") }}">
         </a>
-        <p>{{ user_info.id }} 님</p> 님
+        <p>{{ user_info.id }} 님</p>
     </figure>
 </nav>
 <section class="section">
@@ -188,7 +188,7 @@
             <div class="field">
                 <p class="control">
                     <button class="button is-danger is-rounded" id="input-post"
-                           onclick='$("#modal-post").addClass("is-active")'>오늘의 밥 친구 만들기</button>
+                           onclick='$("#modal-post").addClass("is-active")' style="background-color: #e7b934;">오늘의 밥 친구 만들기</button>
                 </p>
             </div>
         </div>
@@ -293,7 +293,7 @@
                             <h6 class="card-subtitle mb-2 text-muted">{{ category }}</h6>
                             <p class="card-text">{{ date }}</p>
                             <p class="card-text">{{ address }}</p>
-                            <a href="detail/{{ post["post_id"] }}" class="btn btn-outline-danger" style="margin-top: 10px">더 자세히 보기</a>
+                            <a href="detail/{{ post["post_id"] }}" class="btn btn-outline-warning" style="margin-top: 10px">더 자세히 보기</a>
                         </div>
                     </div>
                 </div>
