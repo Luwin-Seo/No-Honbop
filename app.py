@@ -27,7 +27,8 @@ def home():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
         user_info = db.users.find_one({"username": payload["id"]})
-        return render_template('index.html', user_info=user_info)
+        posts = list(db.posts.find({}))
+        return render_template('index.html', user_info=user_info, posts=posts)
 
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
@@ -43,7 +44,6 @@ def login():
 @app.route('/postpop')
 def postin():
     return render_template('posting_card.html')
-
 
 @app.route('/user/<username>')
 def user(username):
