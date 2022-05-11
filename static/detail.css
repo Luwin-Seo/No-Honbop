@@ -64,10 +64,10 @@ form {
 
 #join {
   position: absolute;
-  left: 330px;
+  left: 320px;
   top: 20px;
   padding: 0;
-  width: 80px;
+  width: 90px;
 }
 
 #join, #cancel {

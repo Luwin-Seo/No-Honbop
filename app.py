@@ -66,10 +66,11 @@ def detail(post_id):
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         post = db.posts.find_one({"post_id": int(post_id)})
         comments = list(db.comments.find({'post_id': post_id}))
-        likes = len(list(db.likes.find({'post_id': post_id})))
-        print(post)
+        likes = db.likes.count_documents({"post_id": post_id})
+        party = db.party.count_documents({"post_id": post_id})
+
         return render_template('detail.html', 
-            likes = likes, post = post, comments = comments, post_id = post_id)
+            likes=likes, post=post, comments=comments, post_id=post_id, party=party)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("login"))
     
@@ -205,20 +206,20 @@ def update_like():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         # 좋아요 수 변경
-        user_info = db.users.find_one({"username": payload["id"]})
-        post_id_receive = request.form["post_id_give"]
-        action_receive = request.form["action_give"]
+        user_id = db.users.find_one({"id": payload["id"]})["id"]
+        post_id = request.form["post_id"]
+        
         doc = {
-            "post_id": post_id_receive,
-            "username": user_info["username"]
+            "post_id": post_id,
+            "user_id": user_id
         }
-        if action_receive =="like":
-            db.likes.insert_one(doc)
-        else:
+        
+        if db.likes.find_one(doc):
             db.likes.delete_one(doc)
-        count = db.likes.count_documents({"post_id": post_id_receive})
-        print(count)
-        return jsonify({"result": "success", 'msg': 'updated', "count": count})
+        else:
+            db.likes.insert_one(doc)
+        
+        return redirect(post_id)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
@@ -228,7 +229,20 @@ def participate():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         # 포스팅하기
-        return jsonify({"result": "success", 'msg': '참여 성공'})
+        user_id = db.users.find_one({"id": payload["id"]})["id"]
+        post_id = request.form["post_id"]
+        
+        doc = {
+            "post_id": post_id,
+            "user_id": user_id
+        }
+        
+        if db.party.find_one(doc):
+            db.party.delete_one(doc)
+        else:
+            db.party.insert_one(doc)
+        
+        return redirect(post_id)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
