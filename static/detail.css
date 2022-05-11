@@ -144,3 +144,10 @@ form {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
+
+body {
+    background-color: #f7f1e3;
+}
+.wrap {
+    background-color: #ffeaa9;
+}
