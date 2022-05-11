@@ -149,6 +149,7 @@ def posting():
         datenow_receive = request.form['datenow_give']
         date_receive = request.form['date_give']
         time_receive = request.form['time_give']
+        category_receive = request.form['category_give']
         maxcount_receice = request.form['maxcount_give']
         all_posts = list(db.posts.find({}, {'_id': False}))
         count = len(all_posts) + 1
@@ -167,6 +168,7 @@ def posting():
             'date': date_receive,
             'time': time_receive,
             'maxcount': maxcount_receice,
+            'category': category_receive,
             'user_count': 0,
             'like': 0
         }
