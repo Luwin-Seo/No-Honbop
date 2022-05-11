@@ -31,6 +31,7 @@
 
         function searchAddress() {
             $("#search_result").empty()
+            $("#chosen_one").empty()
             if ($("#place").val() == "") {
                 alert("검색어를 입력하세요")
             } else {
@@ -45,17 +46,18 @@
                         //호출 성공하면 작성할 내용
                         let rows = response['documents']
                         for (let i = 0; i < rows.length; i++) {
+                            let id = rows[i]['id']
                             let place = rows[i]['place_name']
                             let address = rows[i]['address_name']
                             let url = rows[i]['place_url']
 
-                            let temp_html = `<button type="button" class="button" onclick="hey()">
+                            let temp_html = `<button type="button" class="button" onclick="hey(${id})">
                                             <div class="row g-0">
                                                 <div class="col-md-8">
                                                     <div class="card-body">
-                                                        <h5 class="card-title">${place}</h5>
-                                                        <p class="card-text">${address}</p>
-                                                        <p class="card-text"><small class="text-muted">${url}</small></p>
+                                                        <h5 class="card-title" id="cp">${place}</h5>
+                                                        <p class="card-text" id="ca">${address}</p>
+                                                        <p class="card-text"><small class="text-muted" id="cu">${url}</small></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -73,24 +75,72 @@
             }
         }
 
-        function hey() {
-            alert("hey")
+        function hey(a) {
+            $("#search_result").empty()
+            if ($("#place").val() == "") {
+                alert("검색어를 입력하세요")
+            } else {
+                var q = $("#place").val(); //검색 내용
+                //ajax 시작
+                $.ajax({
+                    url: 'https://dapi.kakao.com//v2/local/search/keyword',
+                    headers: {'Authorization': 'KakaoAK d1e860dcc4958625477d32113326c5ee'},
+                    type: 'GET',
+                    data: {'query': q},
+                    success: function (response) {
+                        //호출 성공하면 작성할 내용
+                        let rows = response['documents']
+                        for (let i = 0; i < rows.length; i++) {
+                            if (rows[i]['id'] == a) {
+                                let id = rows[i]['id']
+                                let place = rows[i]['place_name']
+                                let address = rows[i]['address_name']
+                                let url = rows[i]['place_url']
+
+                                let temp_html = `<button type="button" class="button">
+                                            <div class="row g-0">
+                                                <div class="col-md-8">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title" id="cp">${place}</h5>
+                                                        <p class="card-text" id="ca">${address}</p>
+                                                        <p class="card-text"><small class="text-muted" id="cu">${url}</small></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </button>`
+
+                                $("#chosen_one").append(temp_html)
+                            }
+
+                        }
+
+                    },
+                })
+            }
         }
 
         function posting() {
-            alert($("#place").val())
-            console.log('안되는 이유를 모르겠다')
+
+            let place = $("#cp").text()
+            let address = $("#ca").text()
+            let url = $("#cu").text()
+            let date = $("#date").val()
+
             $.ajax({
                 type: 'POST',
                 url: '/posting',
                 data: {
                     title_give: $("#title").val(),
-                    place_give: $("#place").val(),
-                    address_give: $('#address').val(),
+                    place_give: place,
+                    address_give: address,
                     desc_give: $("#desc").val(),
                     tag_give: $("#tag").val(),
+                    url_give: url,
                     payment_give: $("#payment").val(),
-                    date_give: new Date().toISOString()
+                    datenow_give: new Date().toISOString(),
+                    date_give: date,
+                    time_give: $("#time").val(),
+                    maxcount_give: $("#maxcount").val()
                 },
                 success: function (response) {
                     alert(response['msg'])
@@ -136,78 +186,73 @@
     <div class="modal" id="modal-post">
         <div class="modal-background" onclick='$("#modal-post").removeClass("is-active")'></div>
         <div class="modal-content">
-            <div class="mypost" id="post-box">
-                <div class="form-floating">
-                    <textarea class="form-control" placeholder="제목" id="title"></textarea>
-                    <label for="title">여기에 포스팅 제목을 적어주세요</label>
-                </div>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="" aria-label="내가 가고싶은 곳은 여기!"
-                           aria-describedby="button-addon2" id="place">
-                    <button class="btn btn-outline-secondary" type="button" onclick="searchAddress()">식당 검색하기
-                    </button>
-                </div>
-                <div id="search_result">
-                </div>
-                <div class="row g-2" id="catset">
-                    <div class="col-md">
-                        <div class="form-floating">
-                            <select class="form-select" id="payment" aria-label="Floating label select example">
-                                <option selected>--결제 방식--</option>
-                                <option value="내.돈.내.먹.">내.돈.내.먹.</option>
-                                <option value="무조건 n 분의 1 빵">무조건 n 분의 1 빵</option>
-                                <option value="오늘은 내가 쏜다!">오늘은 내가 쏜다!</option>
-                                <option value="무전취식 - 발빠르신 분만">무전취식 - 발빠르신 분만</option>
-                            </select>
+            <div class="mypost">
+    <div class="form-floating">
+        <textarea class="form-control" placeholder="제목" id="title"></textarea>
+        <label for="title">여기에 포스팅 제목을 적어주세요</label>
+    </div>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="" aria-label="내가 가고싶은 곳은 여기!"
+               aria-describedby="button-addon2" id="place">
+        <button class="btn btn-outline-secondary" type="button" onclick="searchAddress()">식당 검색하기
+        </button>
+    </div>
+    <div id="chosen_one">
+    </div>
+    <div id="search_result">
+    </div>
+    <div>
+        <div class="form-floating mb-3">
+            <input type="date" class="form-control" id="date" placeholder="">
+            <label for="date">날짜를 정하세요</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="time" class="form-control" id="time" placeholder="">
+            <label for="time">시간을 정하세요</label>
+        </div>
+    </div>
+    <div class="row g-2" id="catset">
+        <div class="col-md">
+            <div class="form-floating">
+                <select class="form-select" id="payment" aria-label="Floating label select example">
+                    <option selected>--결제 방식--</option>
+                    <option value="내.돈.내.먹.">내.돈.내.먹.</option>
+                    <option value="무조건 n 분의 1 빵">무조건 n 분의 1 빵</option>
+                    <option value="오늘은 내가 쏜다!">오늘은 내가 쏜다!</option>
+                    <option value="무전취식 - 발빠르신 분만">무전취식 - 발빠르신 분만</option>
+                </select>
 
-                            <label for=payment>오늘의 물주는 누구?</label>
-                        </div>
-<<<<<<< Updated upstream
-=======
-                    </div>
-                    <div class="col-md">
-                        <div class="form-floating">
-                            <select class="form-select" id="maxcount"
-                                    aria-label="Floating label select example">
-                                <option selected>--최대 인원수--</option>
-                                <option value="1">1명</option>
-                                <option value="2">2명</option>
-                                <option value="3">3명</option>
-                                <option value="4">PARTY TONIGHT!</option>
-                            </select>
-                            <label for="maxcount">몇명까지 커버 가능?</label>
-                        </div>
->>>>>>> Stashed changes
-                    </div>
-                    <div class="col-md">
-                        <div class="form-floating">
-                            <select class="form-select" id="maxcount"
-                                    aria-label="Floating label select example">
-                                <option selected>--최대 인원수--</option>
-                                <option value="1">1명</option>
-                                <option value="2">2명</option>
-                                <option value="3">3명</option>
-                                <option value="4">PARTY TONIGHT!</option>
-                            </select>
-                            <label for="maxcount">몇명까지 커버 가능?</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-floating">
+                <label for=payment>오늘의 물주는 누구?</label>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="form-floating">
+                <select class="form-select" id="maxcount" aria-label="Floating label select example">
+                    <option selected>--최대 인원수--</option>
+                    <option value="1">1명</option>
+                    <option value="2">2명</option>
+                    <option value="3">3명</option>
+                    <option value="4">PARTY TONIGHT!</option>
+                </select>
+                <label for="maxcount">몇명까지 커버 가능?</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-floating">
         <textarea class="form-control" placeholder="여기에 꼭 가야하는 이유!" id="desc"
                   style="height: 200px"></textarea>
-                    <label for="comment">여기에 꼭 가야하는 이유!</label>
-                </div>
-                <div class="form-floating">
-                    <textarea class="form-control" placeholder="태그 달기" id="tag"></textarea>
-                    <label for="floatingTextarea">태그는 여기에 달아주세요</label>
-                </div>
-                <div class="btnset">
-                    <button onclick="posting()" type="button" class="btn btn-primary">가앝즈아아아아아아아아!</button>
-                    <button type="button" class="btn btn-danger" id="stop">잠깐 이거 아닌거 같애</button>
-                </div>
-                </div> 
-               </div>
+        <label for="desc">여기에 꼭 가야하는 이유!</label>
+    </div>
+    <div class="form-floating">
+        <textarea class="form-control" placeholder="태그 달기" id="tag"></textarea>
+        <label for="tag">태그는 여기에 달아주세요</label>
+    </div>
+    <div class="btnset">
+        <button onclick="posting()" type="button" class="btn btn-primary">가앝즈아아아아아아아아!</button>
+        <button onclick="test()" type="button" class="btn btn-danger" id="stop">잠깐 이거 아닌거 같애</button>
+    </div>
+</div>
+</div>
                </div>
             </section>
         </div>
