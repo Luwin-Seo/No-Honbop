@@ -242,7 +242,7 @@
                                                                                         $("#post-box").append(temp_html)
                                                                                         /*그런데 키워드도 비었을 때*/}
                                                                     else{/*날짜가 지정되지 않았는데 키워드는 있을 때*/
-                                                                        if (title.includes(keyword)||place.includes(keyword)||address.includes(keyword)||tag.includes(keyword)) {
+                                                                        if (title.includes(keyword)||place.includes(keyword)||address.includes(keyword)||tag.includes(keyword)||category.includes(keyword)) {
                                                                         console.log(title,place,address,tag,adate)
 
                                                                         let temp_html = `<div class="col">
@@ -284,7 +284,7 @@
                             else {/*날짜가 있고 키워드가 있을 때*/
                                 if (adate != pdate) {}
                         else {
-                            if (title.includes(keyword)||place.includes(keyword)||address.includes(keyword)||tag.includes(keyword)) {
+                            if (title.includes(keyword)||place.includes(keyword)||address.includes(keyword)||tag.includes(keyword)||category.includes(keyword)) {
                                 console.log(title,place,address,tag,adate)
 
                                 let temp_html = `<div class="col">
