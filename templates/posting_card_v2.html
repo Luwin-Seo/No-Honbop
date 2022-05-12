@@ -243,9 +243,17 @@
          }
 
         function sign_up() {
-            let username = $("#input-username").val()
-            let password = $("#input-password").val()
-            let password2 = $("#input-password2").val()
+            let title = $("#title").val()
+             let place = $("#cp").text()
+             let desc = $("#desc").val()
+             let tag = $("#tag").val()
+             let payment = $("#payment").val()
+             let address = $("#ca").text()
+             let url = $("#cu").text()
+             let date = $("#date").val()
+             let category = $("#cc").text()
+             let time = $("#time").val()
+             let maxcount = $("#maxcount").val()
             console.log(username, password, password2)
 
 
@@ -295,15 +303,93 @@
         }
 
         function check_dup() {
-            let username = $("#input-username").val()
-            console.log(username)
-            if (username == "") {
-                $("#help-id").text("제목을 입력해주세요.").removeClass("is-safe").addClass("is-danger")
-                $("#input-username").focus()
+            let title = $("#title").val()
+            let place = $("#cp").text()
+            let desc = $("#desc").val()
+            let tag = $("#tag").val()
+            let payment = $("#payment").val()
+            let address = $("#ca").text()
+            let url = $("#cu").text()
+            let date = $("#date").val()
+            let category = $("#cc").text()
+            let time = $("#time").val()
+            let maxcount = $("#maxcount").val()
+            if (title == "") {
+                $("#help-title").text("제목을 입력해주세요.").removeClass("is-safe").addClass("is-danger")
+                $("#title").focus()
                 return;
             } else {
-                $("#help-id").removeClass("is-danger").addClass("is-success")
+                $("#help-title").text("체크 완료!").removeClass("is-danger").addClass("is-success")
             }
+            if (place == "") {
+                $("#help-place").text("장소를 검색하고 확인해 주세요.").removeClass("is-safe").addClass("is-danger")
+                $("#place").focus()
+                return;
+            } else {
+                $("#help-place").text("체크 완료!").removeClass("is-danger").addClass("is-success")
+            }
+            if (date == "") {
+                $("#help-date").text("약속날짜를 정해주세요.").removeClass("is-safe").addClass("is-danger")
+                $("#date").focus()
+                return;
+            } else {
+                $("#help-date").text("체크 완료!").removeClass("is-danger").addClass("is-success")
+                if (time == "") {
+                    $("#help-time").text("약속시간을 정해주세요.").removeClass("is-safe").addClass("is-danger")
+                    $("#time").focus()
+                    return;
+                } else {
+                    $("#help-time").text("체크 완료!").removeClass("is-danger").addClass("is-success")
+                }
+                if (payment == "") {
+                    $("#help-payment").text("지불방식을 정하세요.").removeClass("is-safe").addClass("is-danger")
+                    $("#payment").focus()
+                    return;
+                } else {
+                    $("#help-payment").text("체크 완료!").removeClass("is-danger").addClass("is-success")
+                }
+                if (maxcount == "") {
+                    $("#help-maxcount").text("모임 최대인원을 설정하세요.").removeClass("is-safe").addClass("is-danger")
+                    $("#maxcount").focus()
+                    return;
+                } else {
+                    $("#help-maxcount").text("체크 완료!").removeClass("is-danger").addClass("is-success")
+                }
+                if (desc == "") {
+                    $("#help-desc").text("간단한 설명을 써 주세요.").removeClass("is-safe").addClass("is-danger")
+                    $("#desc").focus()
+                    return;
+                } else {
+                    $("#help-desc").text("체크 완료!").removeClass("is-danger").addClass("is-success")
+
+                }
+
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/posting',
+                data: {
+                    title_give: title,
+                    place_give: place,
+                    address_give: address,
+                    desc_give: desc,
+                    tag_give: tag,
+                    url_give: url,
+                    payment_give: payment,
+                    datenow_give: new Date().toISOString(),
+                    date_give: date,
+                    category_give: category,
+                    time_give: time,
+                    maxcount_give: maxcount
+                },
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.reload()
+                }
+
+            });
+
         }
 
         function whatthefuck() {
@@ -322,12 +408,14 @@
                         <input id="title" class="input" type="text"
                                placeholder="포스팅 제목을 적어주세요">
                         <span class="icon is-small is-left"><i class="fa fa-lock"></i></span>
+                        <p id="help-title" class="help">필수 입력사항입니다</p>
                     </div>
                 </div>
                 <div class="field has-addons">
                     <div class="control has-icons-left" style="width:100%">
                         <input id="place" class="input" type="text" placeholder="음식점 이름">
                         <span class="icon is-small is-left"><i class="fa fa-user"></i></span>
+                        <p id="help-place" class="help">가급적 이름을 정확히 검색한 뒤 선택하세요</p>
                     </div>
                     <div id="btn-check-dup">
                         <button class="button is-sparta" onclick="searchAddress()">검색하기</button>
@@ -340,10 +428,12 @@
                     <div class="form-floating mb-3">
                         <input type="date" class="form-control" id="date" placeholder="">
                         <label for="date">날짜를 정하세요</label>
+                        <p id="help-date" class="help">필수 입력사항입니다</p>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="time" class="form-control" id="time" placeholder="">
                         <label for="time">시간을 정하세요</label>
+                        <p id="help-time" class="help">필수 입력사항입니다</p>
                     </div>
                 </div>
                 <div class="row g-2">
@@ -356,6 +446,7 @@
                                 <option value="오늘은 내가 쏜다!">오늘은 내가 쏜다!</option>
                                 <option value="무전취식 - 발빠르신 분만">무전취식 - 발빠르신 분만</option>
                             </select>
+                            <p id="help-payment" class="help">필수 입력사항입니다</p>
 
                             <label for=payment>오늘의 물주는 누구?</label>
                         </div>
@@ -369,6 +460,7 @@
                                 <option value="3">3명</option>
                                 <option value="4">PARTY TONIGHT!</option>
                             </select>
+                            <p id="help-maxcount" class="help">필수 입력사항입니다</p>
                             <label for="maxcount">몇명까지 커버 가능?</label>
                         </div>
                     </div>
@@ -377,6 +469,7 @@
                 <textarea class="form-control" placeholder="여기에 꼭 가야하는 이유!" id="desc"
                 style="height: 200px; margin-top: 15px"></textarea>
                     <label for="desc">여기에 꼭 가야하는 이유!</label>
+                    <p id="help-desc" class="help">필수 입력사항입니다</p>
                 </div>
                 <div class="form-floating" style="margin-top: 15px">
                     <textarea class="form-control" placeholder="태그 달기" id="tag"></textarea>
@@ -384,7 +477,7 @@
                 </div>
                 <div id="div-sign-in-or-up" class="has-text-centered" style="margin-top: 15px">
                         <div class="level is-mobile">
-                            <button class="level-item button is-sparta" onclick="posting()">
+                            <button class="level-item button is-sparta" onclick="check_dup()">
                                 포스팅하기!
                             </button>
                         </div>
