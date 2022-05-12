@@ -26,7 +26,7 @@
             <button type="submit" class="btn btn-outline-success">
               {% set num = party|length %}
               {% set max = post.maxcount|int %}
-              {% if num >= max %} 
+              {% if num >= max and max != 4 %} 
                 마감 {{num}}
               {% else %} 
                 참가 {{num}}
@@ -45,7 +45,14 @@
           </form>
           <p class="user_id">{{post.user_id}}</p>
           <p class="date">{{post.date}} {{post.time}}</p>
-          <p class="tags">#{{post.payment}} #{{post.maxcount}}인 이하 {{post.tag}}</p>
+          <p class="tags">#{{post.payment}} 
+          {% set max_count = post.maxcount %}
+          {% if max_count == '4' %} 
+            #PARTY TONIGHT!
+          {% else %} 
+            #{{max_count}}인 이하
+          {% endif %}
+          {{post.tag}}</p>
           <p>{{post.desc}}</p>
         </div>
         <form id='write' action='/detail/write' method='post'>

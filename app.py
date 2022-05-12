@@ -252,7 +252,7 @@ def participate():
         if post["user_id"] == user_id:
             return redirect(post_id)
           
-        if party_num >= int(request.form['party']):
+        if request.form['party'] != '4' and party_num >= int(request.form['party']):
             db.party.delete_one(doc)
             return redirect(post_id)
         
