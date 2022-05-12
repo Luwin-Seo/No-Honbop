@@ -5,7 +5,7 @@
 body {
     background-color: #f7f1e3;
     min-height: 100vh;
-      padding-top: 3.25rem;
+    padding-top: 3.25rem;
 }
 
 .section {
@@ -33,8 +33,9 @@ body {
 }
 
 .modal-content {
-    width: 600px;
+    width: 500px;
     max-width: 80%;
+    background-color: #f7f1e3;
 }
 
 input::-webkit-calendar-picker-indicator {
@@ -54,6 +55,7 @@ input::-webkit-calendar-picker-indicator {
     margin: 10px auto 0px auto;
     box-shadow: 0px 0px 3px 0px grey;
     padding: 20px;
+    background-color: white;
 }
 
 .mypost > * {
@@ -128,4 +130,8 @@ input::-webkit-calendar-picker-indicator {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.form-floating>.form-select {
+    font-family: 'Jua', sans-serif;
 }
