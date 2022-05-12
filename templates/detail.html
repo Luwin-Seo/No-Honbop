@@ -11,6 +11,9 @@
     <body>
       <div id="item_info" class="wrap">
         <div id="store">
+          <a href='/'>
+            <i class="fa-solid fa-arrow-left"></i> 이전 페이지
+          </a>
           <h1>{{post.place}}</h1>
           <p>{{post.category}}</p>
           <p>{{post.address}}</p>
@@ -19,7 +22,16 @@
         <div id="user">
           <form id='join' action='/detail/parti' method='post'>
             <input type="hidden" name="post_id" value={{post_id}}>
-            <button type="submit" class="btn btn-outline-success">참가 {{party|length}}</button>
+            <input type="hidden" name="party" value={{post.maxcount}}>
+            <button type="submit" class="btn btn-outline-success">
+              {% set num = party|length %}
+              {% set max = post.maxcount|int %}
+              {% if num >= max %} 
+                마감 {{num}}
+              {% else %} 
+                참가 {{num}}
+              {% endif %}
+            </button>
           </form>
           <ul id='hidden' class="list-group">
             <li class="list-group-item">작성 {{post.user_id}}</li>
@@ -48,7 +60,7 @@
         <div id="comment">
           {% for comment in comments %}
             <ul class="list-group list-group-horizontal-sm">
-              <li class="list-group-item">{{comment.user_id}}</li>
+              <li class="list-group-item w-80">{{comment.user_id}}</li>
               <li class="list-group-item">{{comment.comment}}</li>
               <li class="list-group-item delete-li">
                 <form class='delete' action='/detail/delete' method='post'>

@@ -241,11 +241,21 @@ def participate():
         # 포스팅하기
         user_id = db.users.find_one({"id": payload["id"]})["id"]
         post_id = request.form["post_id"]
+        post = db.posts.find_one({"post_id": int(post_id)})
+        party_num = db.party.count_documents({"post_id": post_id})
         
         doc = {
             "post_id": post_id,
             "user_id": user_id
         }
+        
+        if post["user_id"] == user_id:
+            print('작성자 금지')
+            return redirect(post_id)
+          
+        if party_num >= int(request.form['party']):
+            print('인원수 초과', party_num, int(request.form['party']))
+            return redirect(post_id)
         
         if db.party.find_one(doc):
             db.party.delete_one(doc)

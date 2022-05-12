@@ -32,7 +32,14 @@ p {
   padding: 10px;
 }
 
+#store a {
+  text-decoration: none;
+  color:teal;
+  font-size: 18px;
+}
+
 #store h1 {
+  margin-top: 8px;
   font-size: 25px;
 }
 
@@ -77,6 +84,7 @@ form {
 
 #hidden {
   position: absolute;
+  width: 300px;
   left: 335px;
   top: 65px;
   height: 20px;
@@ -122,8 +130,13 @@ form {
   font-size: 15px;
 }
 
+#comment ul li:nth-child(1) {
+  width: 80px;
+  padding: 8px;
+}
+
 #comment ul li:nth-child(2) {
-  width: 380px;
+  width: 350px;
   border-right: 0;
 }
 
