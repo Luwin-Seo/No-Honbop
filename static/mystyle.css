@@ -123,3 +123,9 @@ input::-webkit-calendar-picker-indicator {
 .media-left > .image {
     margin-right: 10px;
 }
+
+.field > .control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
