@@ -250,11 +250,10 @@ def participate():
         }
         
         if post["user_id"] == user_id:
-            print('작성자 금지')
             return redirect(post_id)
           
         if party_num >= int(request.form['party']):
-            print('인원수 초과', party_num, int(request.form['party']))
+            db.party.delete_one(doc)
             return redirect(post_id)
         
         if db.party.find_one(doc):
