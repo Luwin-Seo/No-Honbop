@@ -227,9 +227,6 @@
         </a>
     </div>
     <figure class="media-left" style="align-self: center">
-        <a class="image is-32x32" href="/user/{{ user_info.id }}">
-            <img class="is-rounded" src="{{ url_for("static", filename="profile_pics/profile_placeholder.png") }}">
-        </a>
         <p>{{ user_info.id }} 님</p>
         <a class="button level-item has-text-centered is-sparta is-outlined" aria-label="logout"
            onclick="sign_out()">
@@ -240,11 +237,6 @@
 </nav>
 <section class="section">
     <article class="media">
-{#        <figure class="media-left" style="align-self: center">#}
-{#            <a class="image is-32x32" href="/user/{{ user_info.id }}">#}
-{#                <img class="is-rounded" src="{{ url_for('static', filename=user_info.profile_pic_real) }}">#}
-{#            </a>#}
-{#        </figure>#}
         <div class="media-content">
             <div class="field">
                 <p class="control">
