@@ -149,48 +149,48 @@
             let time = $("#time").val()
             let maxcount = $("#maxcount").val()
             if (title == "") {
-                $("#help-title").text("제목을 입력해주세요.").removeClass("is-safe").addClass("is-danger")
+                $("#help-title").text("제목을 입력해주세요.").removeClass("is-safe").addClass("is-danger").removeClass("is-hidden")
                 $("#title").focus()
                 return;
             } else {
                 $("#help-title").text("체크 완료!").removeClass("is-danger").addClass("is-success")
             }
             if (place == "") {
-                $("#help-place").text("검색은 필수!").removeClass("is-safe").addClass("is-danger")
+                $("#help-place").text("검색은 필수!").removeClass("is-safe").addClass("is-danger").removeClass("is-hidden")
                 $("#place").focus()
                 return;
             } else {
                 $("#help-place").text("체크 완료!").removeClass("is-danger").addClass("is-success")
             }
             if (date == "") {
-                $("#help-date").text("약속날짜를 정해주세요.").removeClass("is-safe").addClass("is-danger")
+                $("#help-date").text("약속날짜를 정해주세요.").removeClass("is-safe").addClass("is-danger").removeClass("is-hidden")
                 $("#date").focus()
                 return;
             } else {
                 $("#help-date").text("체크 완료!").removeClass("is-danger").addClass("is-success")
                 if (time == "") {
-                    $("#help-time").text("약속시간을 정해주세요.").removeClass("is-safe").addClass("is-danger")
+                    $("#help-time").text("약속시간을 정해주세요.").removeClass("is-safe").addClass("is-danger").removeClass("is-hidden")
                     $("#time").focus()
                     return;
                 } else {
                     $("#help-time").text("체크 완료!").removeClass("is-danger").addClass("is-success")
                 }
                 if (payment == "") {
-                    $("#help-payment").text("지불방식을 정하세요.").removeClass("is-safe").addClass("is-danger")
+                    $("#help-payment").text("지불방식을 정하세요.").removeClass("is-safe").addClass("is-danger").removeClass("is-hidden")
                     $("#payment").focus()
                     return;
                 } else {
                     $("#help-payment").text("체크 완료!").removeClass("is-danger").addClass("is-success")
                 }
                 if (maxcount == "") {
-                    $("#help-maxcount").text("모임 최대인원을 설정하세요.").removeClass("is-safe").addClass("is-danger")
+                    $("#help-maxcount").text("모임 최대인원을 설정하세요.").removeClass("is-safe").addClass("is-danger").removeClass("is-hidden")
                     $("#maxcount").focus()
                     return;
                 } else {
                     $("#help-maxcount").text("체크 완료!").removeClass("is-danger").addClass("is-success")
                 }
                 if (desc == "") {
-                    $("#help-desc").text("간단한 설명을 써 주세요.").removeClass("is-safe").addClass("is-danger")
+                    $("#help-desc").text("간단한 설명을 써 주세요.").removeClass("is-safe").addClass("is-danger").removeClass("is-hidden")
                     $("#desc").focus()
                     return;
                 } else {
@@ -371,7 +371,7 @@
                         <input id="title" class="input" type="text"
                                placeholder="포스팅 제목을 적어주세요">
                     </div>
-                    <p id="help-title" class="help">필수 입력사항입니다</p>
+                    <p id="help-title" class="help is-hidden">필수 입력사항입니다</p>
                 </div>
                 <div class="field has-addons">
                     <div class="control" style="width:100%">
@@ -388,12 +388,12 @@
                     <div class="form-floating mb-3">
                         <input type="date" class="form-control" id="date" placeholder="">
                         <label for="date">날짜를 정하세요</label>
-                        <p id="help-date" class="help">필수 입력사항입니다</p>
+                        <p id="help-date" class="help is-hidden">필수 입력사항입니다</p>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="time" class="form-control" id="time" placeholder="">
                         <label for="time">시간을 정하세요</label>
-                        <p id="help-time" class="help">필수 입력사항입니다</p>
+                        <p id="help-time" class="help is-hidden">필수 입력사항입니다</p>
                     </div>
                 </div>
                 <div class="row g-2">
@@ -406,7 +406,7 @@
                                 <option value="오늘은 내가 쏜다!">오늘은 내가 쏜다!</option>
                                 <option value="무전취식 - 발빠르신 분만">무전취식 - 발빠르신 분만</option>
                             </select>
-                            <p id="help-payment" class="help">필수 입력사항입니다</p>
+                            <p id="help-payment" class="help is-hidden">필수 입력사항입니다</p>
 
                             <label for=payment>오늘의 물주는 누구?</label>
                         </div>
@@ -420,7 +420,7 @@
                                 <option value="3">3명</option>
                                 <option value="4">PARTY TONIGHT!</option>
                             </select>
-                            <p id="help-maxcount" class="help">필수 입력사항입니다</p>
+                            <p id="help-maxcount" class="help is-hidden">필수 입력사항입니다</p>
                             <label for="maxcount">몇명까지 커버 가능?</label>
                         </div>
                     </div>
@@ -429,7 +429,7 @@
                 <textarea class="form-control" placeholder="여기에 꼭 가야하는 이유!" id="desc"
                 style="height: 100px; margin-top: 15px"></textarea>
                     <label for="desc">여기에 꼭 가야하는 이유!</label>
-                    <p id="help-desc" class="help">필수 입력사항입니다</p>
+                    <p id="help-desc" class="help is-hidden">필수 입력사항입니다</p>
                 </div>
                 <div class="form-floating" style="margin-top: 15px">
                     <textarea class="form-control" placeholder="태그 달기" id="tag"></textarea>
