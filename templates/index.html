@@ -136,37 +136,76 @@
             }
         }
 
-        function posting() {
-
-            let place = $("#cp").text()
-            let address = $("#ca").text()
-            let url = $("#cu").text()
-            let date = $("#date").val()
-            let category = $("#cc").text()
-
-            $.ajax({
-                type: 'POST',
-                url: '/posting',
-                data: {
-                    title_give: $("#title").val(),
-                    place_give: place,
-                    address_give: address,
-                    desc_give: $("#desc").val(),
-                    tag_give: $("#tag").val(),
-                    url_give: url,
-                    payment_give: $("#payment").val(),
-                    datenow_give: new Date().toISOString(),
-                    date_give: date,
-                    category_give: category,
-                    time_give: $("#time").val(),
-                    maxcount_give: $("#maxcount").val()
-                },
-                success: function (response) {
-                    alert(response['msg'])
-                    window.location.reload()
-                }
-            });
+        function test () {
+             alert($("#cp").text())
         }
+
+         function posting() {
+             let title = $("#title").val()
+             let place = $("#cp").text()
+             let desc = $("#desc").val()
+             let tag = $("#tag").val()
+             let payment = $("#payment").val()
+             let address = $("#ca").text()
+             let url = $("#cu").text()
+             let date = $("#date").val()
+             let category = $("#cc").text()
+             let time = $("#time").val()
+             let maxcount = $("#maxcount").val()
+
+             if (title == "") {
+                 alert("멋있는 제목이 있어야겠죠?")
+             } else {
+                 if (place == "") {
+                     alert("장소검색 후 해당하는 식당을 선택하세요")
+                 } else {
+                     if (date == "") {
+                         alert("언제한번 밥먹자!는 안돼요! 날짜를 정하세요")
+                     } else {
+                         if (time == "") {
+                             alert("설마 24시간 대기중? 시간을 정하세요")
+                         } else {
+                             if (payment == "--결제 방식--") {
+                                 alert("뒷수습 방법을 정해주세요")
+                             } else {
+                                 if (maxcount == "--최대 인원수--") {
+                                     alert("적정 인원수를 선택하세요")
+                                 } else {
+                                     if (desc == "") {
+                                         alert("매너 있고 센스있는 설명 필수!")
+                                     } else {
+                                         $.ajax({
+                                             type: 'POST',
+                                             url: '/posting',
+                                             data: {
+                                                 title_give: title,
+                                                 place_give: place,
+                                                 address_give: address,
+                                                 desc_give: desc,
+                                                 tag_give: tag,
+                                                 url_give: url,
+                                                 payment_give: payment,
+                                                 datenow_give: new Date().toISOString(),
+                                                 date_give: date,
+                                                 category_give: category,
+                                                 time_give: time,
+                                                 maxcount_give: maxcount
+                                             },
+                                             success : function (response) {
+                                                 alert(response['msg'])
+                                                 window.location.reload()
+                                             }
+
+                                         });
+                                     }
+                                 }
+                             }
+                         }
+                     }
+                 }
+             }
+
+         }
 
         function key_search() {
             $("#post-box").empty()
