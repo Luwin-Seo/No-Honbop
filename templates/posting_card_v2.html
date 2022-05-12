@@ -21,54 +21,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
     <style>
-        .mypost {
-            max-width: 500px;
-            width: 95%;
-
-            margin: 10px auto 0px auto;
-            box-shadow: 0px 0px 3px 0px grey;
-            padding: 20px;
+        * {
+            font-family: 'Jua', sans-serif;
         }
 
-        .mypost > * {
-            width: 90%;
-            max-width: 480px;
-            margin: 20px auto 20px auto;
-        }
-
-        .btnset {
-            width: 90%;
-            max-width: 480px;
-
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .btnset > button {
-            margin-right: 10px;
-        }
-
-        .button {
-
-            max-width: 480px;
-            width: 100%;
-
-            background-color: transparent;
-            color: black;
-
-            border-radius: 5px;
-            border: 1px solid lightgray;
-
-            margin-top: 10px;
-        }
-
-        .button:hover {
-            border: 1px solid black;
-            box-shadow: 0px 0px 3px 0px gray;
-        }
         body {
             background-color: #f7f1e3;
             min-height: 100vh;
@@ -111,8 +67,17 @@
         }
     </style>
     <script>
+        {% if msg %}
+            alert("{{ msg }}")
+        {% endif %}
+        // ['쿠키'라는 개념에 대해 알아봅시다]
+        // 로그인을 구현하면, 반드시 쿠키라는 개념을 사용합니다.
+        // 페이지에 관계없이 브라우저에 임시로 저장되는 정보입니다. 키:밸류 형태(딕셔너리 형태)로 저장됩니다.
+        // 쿠키가 있기 때문에, 한번 로그인하면 네이버에서 다시 로그인할 필요가 없는 것입니다.
+        // 브라우저를 닫으면 자동 삭제되게 하거나, 일정 시간이 지나면 삭제되게 할 수 있습니다.
 
-function searchAddress() {
+        function searchAddress() {
+            alert($("#place").val())
             $("#search_result").empty()
             $("#chosen_one").empty()
             if ($("#place").val() == "") {
@@ -135,9 +100,10 @@ function searchAddress() {
                             let url = rows[i]['place_url']
                             let category = rows[i]['category_name']
 
+
                             if (rows[i]['category_group_code'] == "FD6") {
 
-                                let temp_html = `<button type="button" class="button" onclick="hey(${id})" style="margin-top: 15px; margin-bottom: 15px">
+                                let temp_html = `<button type="button" class="button" onclick="hey(${id})" style="height: auto; width: 100%; margin-bottom: 15px;>
                                             <div class="row g-0">
                                                 <div class="col-md-8">
                                                     <div class="card-body">
@@ -186,7 +152,7 @@ function searchAddress() {
                                 let url = rows[i]['place_url']
                                 let category = rows[i]['category_name']
 
-                                let temp_html = `<button type="button" class="button">
+                                let temp_html = `<button type="button" class="button" style="height: auto; width: 100%; margin-bottom: 15px">
                                             <div class="row g-0">
                                                 <div class="col-md-8">
                                                     <div class="card-body">
@@ -199,7 +165,7 @@ function searchAddress() {
                                             </div>
                                         </button>`
 
-                                $("#chosen_one").append(temp_html)
+                                $("#search_result").append(temp_html)
                             }
 
                         }
@@ -209,9 +175,143 @@ function searchAddress() {
             }
         }
 
+        function posting() {
+             let title = $("#title").val()
+             let place = $("#cp").text()
+             let desc = $("#desc").val()
+             let tag = $("#tag").val()
+             let payment = $("#payment").val()
+             let address = $("#ca").text()
+             let url = $("#cu").text()
+             let date = $("#date").val()
+             let category = $("#cc").text()
+             let time = $("#time").val()
+             let maxcount = $("#maxcount").val()
+
+             if (title == "") {
+                 alert("멋있는 제목이 있어야겠죠?")
+             } else {
+                 if (place == "") {
+                     alert("장소검색 후 해당하는 식당을 선택하세요")
+                 } else {
+                     if (date == "") {
+                         alert("언제한번 밥먹자!는 안돼요! 날짜를 정하세요")
+                     } else {
+                         if (time == "") {
+                             alert("설마 24시간 대기중? 시간을 정하세요")
+                         } else {
+                             if (payment == "--결제 방식--") {
+                                 alert("뒷수습 방법을 정해주세요")
+                             } else {
+                                 if (maxcount == "--최대 인원수--") {
+                                     alert("적정 인원수를 선택하세요")
+                                 } else {
+                                     if (desc == "") {
+                                         alert("매너 있고 센스있는 설명 필수!")
+                                     } else {
+                                         $.ajax({
+                                             type: 'POST',
+                                             url: '/posting',
+                                             data: {
+                                                 title_give: title,
+                                                 place_give: place,
+                                                 address_give: address,
+                                                 desc_give: desc,
+                                                 tag_give: tag,
+                                                 url_give: url,
+                                                 payment_give: payment,
+                                                 datenow_give: new Date().toISOString(),
+                                                 date_give: date,
+                                                 category_give: category,
+                                                 time_give: time,
+                                                 maxcount_give: maxcount
+                                             },
+                                             success : function (response) {
+                                                 alert(response['msg'])
+                                                 window.location.reload()
+                                             }
+
+                                         });
+                                     }
+                                 }
+                             }
+                         }
+                     }
+                 }
+             }
+
+         }
+
+        function sign_up() {
+            let username = $("#input-username").val()
+            let password = $("#input-password").val()
+            let password2 = $("#input-password2").val()
+            console.log(username, password, password2)
+
+
+            if ($("#help-id").hasClass("is-danger")) {
+                alert("아이디를 다시 확인해주세요.")
+                return;
+            } else if (!$("#help-id").hasClass("is-success")) {
+                alert("아이디 중복확인을 해주세요.")
+                return;
+            }
+
+            if (password == "") {
+                $("#help-password").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
+                $("#input-password").focus()
+                return;
+            } else if (!is_password(password)) {
+                $("#help-password").text("비밀번호의 형식을 확인해주세요. 영문과 숫자 필수 포함, 특수문자(!@#$%^&*) 사용가능 8-20자").removeClass("is-safe").addClass("is-danger")
+                $("#input-password").focus()
+                return
+            } else {
+                $("#help-password").text("사용할 수 있는 비밀번호입니다.").removeClass("is-danger").addClass("is-success")
+            }
+            if (password2 == "") {
+                $("#help-password2").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
+                $("#input-password2").focus()
+                return;
+            } else if (password2 != password) {
+                $("#help-password2").text("비밀번호가 일치하지 않습니다.").removeClass("is-safe").addClass("is-danger")
+                $("#input-password2").focus()
+                return;
+            } else {
+                $("#help-password2").text("비밀번호가 일치합니다.").removeClass("is-danger").addClass("is-success")
+            }
+            $.ajax({
+                type: "POST",
+                url: "/sign_up/save",
+                data: {
+                    id_give: username,
+                    pw_give: password
+                },
+                success: function (response) {
+                    alert("회원가입을 축하드립니다!")
+                    window.location.replace("/login")
+                }
+            });
+
+        }
+
+        function check_dup() {
+            let username = $("#input-username").val()
+            console.log(username)
+            if (username == "") {
+                $("#help-id").text("제목을 입력해주세요.").removeClass("is-safe").addClass("is-danger")
+                $("#input-username").focus()
+                return;
+            } else {
+                $("#help-id").removeClass("is-danger").addClass("is-success")
+            }
+        }
+
+        function whatthefuck() {
+            alert("what")
+        }
+
     </script>
 </head>
-
 <body>
 <section class="section">
     <div class="container">
@@ -232,6 +332,7 @@ function searchAddress() {
                     <div id="btn-check-dup">
                         <button class="button is-sparta" onclick="searchAddress()">검색하기</button>
                     </div>
+
                 </div>
                 <div>
                     <div id="chosen_one"></div>
@@ -245,7 +346,7 @@ function searchAddress() {
                         <label for="time">시간을 정하세요</label>
                     </div>
                 </div>
-                <div class="row g-2" id="catset">
+                <div class="row g-2">
                     <div class="col-md">
                         <div class="form-floating">
                             <select class="form-select" id="payment" aria-label="Floating label select example">
@@ -283,7 +384,7 @@ function searchAddress() {
                 </div>
                 <div id="div-sign-in-or-up" class="has-text-centered" style="margin-top: 15px">
                         <div class="level is-mobile">
-                            <button class="level-item button is-sparta" onclick="sign_in()">
+                            <button class="level-item button is-sparta" onclick="posting()">
                                 포스팅하기!
                             </button>
                         </div>
@@ -293,5 +394,4 @@ function searchAddress() {
     </div>
 </section>
 </body>
-
 </html>

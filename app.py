@@ -59,7 +59,7 @@ def login():
 
 @app.route('/postpop')
 def postin():
-    return render_template('posting_card.html')
+    return render_template('posting_card_v2.html')
 
 @app.route('/user/<username>')
 def user(username):

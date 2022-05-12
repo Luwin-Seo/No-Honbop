@@ -351,12 +351,15 @@
         <textarea class="form-control" placeholder="제목" id="title"></textarea>
         <label for="title">여기에 포스팅 제목을 적어주세요</label>
     </div>
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="" aria-label="내가 가고싶은 곳은 여기!"
-               aria-describedby="button-addon2" id="place">
-        <button class="btn btn-outline-secondary" type="button" onclick="searchAddress()">식당 검색하기
-        </button>
-    </div>
+    <div class="field has-addons">
+                    <div class="control has-icons-left" style="width:100%">
+                        <input id="place" class="input" type="text" placeholder="음식점 이름">
+                        <span class="icon is-small is-left"><i class="fa fa-user"></i></span>
+                    </div>
+                    <div id="btn-check-dup">
+                        <button class="button is-sparta" onclick="test()">검색하기</button>
+                    </div>
+                </div>
     <div id="chosen_one">
     </div>
     <div id="search_result">
@@ -408,8 +411,7 @@
         <label for="tag">태그는 여기에 달아주세요</label>
     </div>
     <div class="btnset">
-        <button onclick="posting()" type="button" class="btn btn-primary">가앝즈아아아아아아아아!</button>
-        <button onclick="test()" type="button" class="btn btn-danger" id="stop">잠깐 이거 아닌거 같애</button>
+        <button onclick="posting()" type="button" class="btn btn-outline-success">포스팅 하기</button>
     </div>
 </div>
 </div>
